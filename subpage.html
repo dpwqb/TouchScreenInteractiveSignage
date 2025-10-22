@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>触屏展示台子页面</title>
+    <script src="./js/tailwindcss.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4a6fa5',
+                        secondary: '#e67e22',
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .page-container {
+                position: relative;
+                width: 100%;
+                height: 100vh;
+                overflow: hidden;
+            }
+            .bg-image {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-size: cover;
+                background-position: center;
+                z-index: -1;
+            }
+            .nav-button {
+                position: absolute;
+                width: 60px;
+                height: 60px;
+                top: 20px;
+                z-index: 10;
+                cursor: pointer;
+                opacity: 0.8;
+                transition: opacity 0.3s;
+            }
+            .nav-button:hover {
+                opacity: 1;
+            }
+            .back-button {
+                left: 20px;
+            }
+            .logo {
+                right: 20px;
+            }
+            .page-button {
+                position: absolute;
+                width: 60px;
+                height: 60px;
+                top: 50%;
+                transform: translateY(-50%);
+                z-index: 10;
+                cursor: pointer;
+                opacity: 0.8;
+                transition: opacity 0.3s;
+            }
+            .page-button:hover {
+                opacity: 1;
+            }
+            .left-button {
+                left: 20px;
+            }
+            .right-button {
+                right: 20px;
+            }
+            .content-container {
+                position: absolute;
+                top: 100px;
+                left: 0;
+                width: 100%;
+                bottom: 40px;
+                overflow: hidden;
+            }
+            .content-wrapper {
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                display: flex;
+                transition: transform 0.5s ease;
+            }
+            .svg-container {
+                flex: 0 0 100%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 0 20px;
+                box-sizing: border-box;
+            }
+            .svg-content {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+            }
+            .page-indicator {
+                position: absolute;
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                display: flex;
+                gap: 10px;
+                z-index: 10;
+            }
+            .indicator-dot {
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                background-color: rgba(255, 255, 255, 0.5);
+                transition: background-color 0.3s;
+            }
+            .indicator-dot.active {
+                background-color: white;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="page-container">
+        <!-- 背景图片 -->
+        <div class="bg-image" style="background-image: url('./img/bg.jpg')"></div>
+        
+        <!-- 返回按钮 -->
+        <div class="nav-button back-button" onclick="window.location.href='./home.html'">
+            <img src="./img/back.svg" alt="返回首页" class="w-full h-full">
+        </div>
+        
+        <!-- Logo -->
+        <div class="nav-button logo">
+            <img src="./img/logo.svg" alt="Logo" class="w-full h-full">
+        </div>
+        
+        <!-- 左翻页按钮 -->
+        <div class="page-button left-button" id="leftButton">
+            <img src="./img/left.svg" alt="上一页" class="w-full h-full">
+        </div>
+        
+        <!-- 右翻页按钮 -->
+        <div class="page-button right-button" id="rightButton">
+            <img src="./img/right.svg" alt="下一页" class="w-full h-full">
+        </div>
+        
+        <!-- 内容容器 -->
+        <div class="content-container">
+            <div class="content-wrapper" id="contentWrapper">
+                <!-- SVG内容将通过JavaScript动态加载 -->
+            </div>
+        </div>
+        
+        <!-- 页码指示器 -->
+        <div class="page-indicator" id="pageIndicator">
+            <!-- 页码指示器将通过JavaScript动态加载 -->
+        </div>
+    </div>
+
+    <script src="./js/jquery-1.8.3.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // 页面数据
+            let pageData = [];
+            let currentPage = 0;
+            let totalPages = 0;
+            
+            // 触摸滑动相关变量
+            let startX = 0;
+            let endX = 0;
+            let isScrolling = false;
+            const threshold = 50; // 滑动阈值
+            
+            // 初始化
+            init();
+            
+            // 初始化函数
+            function init() {
+                // 从URL获取当前页码
+                const urlParams = new URLSearchParams(window.location.search);
+                const pageParam = urlParams.get('page');
+                currentPage = pageParam ? parseInt(pageParam) - 1 : 0;
+                
+                // 加载页面数据
+                loadPageData();
+            }
+            
+            // 加载页面数据
+            function loadPageData() {
+                $.getJSON('./data.json', function(data) {
+                    pageData = data.page;
+                    totalPages = pageData.length;
+                    
+                    // 验证当前页码
+                    if (currentPage < 0) currentPage = 0;
+                    if (currentPage >= totalPages) currentPage = totalPages - 1;
+                    
+                    // 渲染页面内容
+                    renderPageContent();
+                    
+                    // 渲染页码指示器
+                    renderPageIndicator();
+                    
+                    // 绑定事件
+                    bindEvents();
+                }).fail(function() {
+                    console.error('加载页面数据失败');
+                });
+            }
+            
+            // 渲染页面内容
+            function renderPageContent() {
+                const contentWrapper = $('#contentWrapper');
+                contentWrapper.empty();
+                
+                // 创建所有页面的SVG容器
+                pageData.forEach((page, index) => {
+                    const svgContainer = $('<div class="svg-container"></div>');
+                    const svgContent = $('<object class="svg-content" type="image/svg+xml"></object>');
+                    svgContent.attr('data', page.URL);
+                    svgContainer.append(svgContent);
+                    contentWrapper.append(svgContainer);
+                });
+                
+                // 设置初始位置
+                updateContentPosition();
+            }
+            
+            // 渲染页码指示器
+            function renderPageIndicator() {
+                const pageIndicator = $('#pageIndicator');
+                pageIndicator.empty();
+                
+                for (let i = 0; i < totalPages; i++) {
+                    const dot = $('<div class="indicator-dot"></div>');
+                    if (i === currentPage) {
+                        dot.addClass('active');
+                    }
+                    pageIndicator.append(dot);
+                }
+            }
+            
+            // 绑定事件
+            function bindEvents() {
+                // 左翻页按钮点击事件
+                $('#leftButton').on('click', function() {
+                    goToPage(currentPage - 1);
+                });
+                
+                // 右翻页按钮点击事件
+                $('#rightButton').on('click', function() {
+                    goToPage(currentPage + 1);
+                });
+                
+                // 触摸开始事件
+                $('.content-container').on('touchstart', function(e) {
+                    startX = e.originalEvent.touches[0].clientX;
+                    isScrolling = true;
+                });
+                
+                // 触摸移动事件
+                $('.content-container').on('touchmove', function(e) {
+                    if (!isScrolling) return;
+                    endX = e.originalEvent.touches[0].clientX;
+                });
+                
+                // 触摸结束事件
+                $('.content-container').on('touchend', function() {
+                    if (!isScrolling) return;
+                    
+                    const diffX = startX - endX;
+                    
+                    // 判断是否达到滑动阈值
+                    if (Math.abs(diffX) > threshold) {
+                        if (diffX > 0) {
+                            // 向左滑动，显示下一页
+                            goToPage(currentPage + 1);
+                        } else {
+                            // 向右滑动，显示上一页
+                            goToPage(currentPage - 1);
+                        }
+                    }
+                    
+                    isScrolling = false;
+                });
+                
+                // 窗口大小改变事件
+                $(window).on('resize', function() {
+                    updateContentPosition();
+                });
+            }
+            
+            // 跳转到指定页面
+            function goToPage(pageIndex) {
+                // 验证页码
+                if (pageIndex < 0 || pageIndex >= totalPages) return;
+                
+                // 更新当前页码
+                currentPage = pageIndex;
+                
+                // 更新URL参数
+                const url = new URL(window.location.href);
+                url.searchParams.set('page', currentPage + 1);
+                window.history.pushState({}, '', url);
+                
+                // 更新内容位置
+                updateContentPosition();
+                
+                // 更新页码指示器
+                updatePageIndicator();
+            }
+            
+            // 更新内容位置
+            function updateContentPosition() {
+                const contentWrapper = $('#contentWrapper');
+                const containerWidth = $('.content-container').width();
+                const newPosition = -currentPage * containerWidth;
+                contentWrapper.css('transform', `translateX(${newPosition}px)`);
+            }
+            
+            // 更新页码指示器
+            function updatePageIndicator() {
+                const dots = $('.indicator-dot');
+                dots.removeClass('active');
+                dots.eq(currentPage).addClass('active');
+            }
+        });
+    </script>
+</body>
+</html>
