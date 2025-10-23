@@ -6,6 +6,13 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<title>触屏展示台子页面</title>
 	<script src="./js/tailwindcss.js"></script>
+	<!-- 引入自定义字体 -->
+	<style>
+		@font-face {
+			font-family: 'SHBreeHeadlineGlobal';
+			src: url('./Fonts/sh-bree-headlineglobal-regular.ttf') format('truetype');
+		}
+	</style>
 	<script>
 		tailwind.config = {
 			theme: {
@@ -39,9 +46,9 @@
       }
       .nav-button {
         position: absolute;
-        width: clamp(64px, 32vw, 128px);
-        height: clamp(64px, 32vw, 128px);
-        /* top: 10px; */
+        width: clamp(128px, 16vw, 512px);
+        height: clamp(64px, 8vw, 200px);
+        top: 20px;
         z-index: 10;
         cursor: pointer;
         opacity: 0.8;
@@ -58,8 +65,8 @@
       }
       .page-button {
         position: absolute;
-        width: clamp(32px, 4vw, 64px);
-        height: clamp(32px, 4vw, 64px);
+        width: clamp(32px, 6vw, 150px);
+        height: clamp(32px, 6vw, 150px);
         top: 50%;
         transform: translateY(-50%);
         z-index: 10;
@@ -97,16 +104,35 @@
         flex: 0 0 100%;
         height: 100%;
         display: flex;
-        justify-content: center;
+        flex-direction: column;
+        justify-content: flex-start;
         align-items: center;
-        padding: 0 20px;
+        padding: 20px;
         box-sizing: border-box;
+      }
+      .page-title {
+        font-family: 'SHBreeHeadlineGlobal', sans-serif;
+        font-size: 4rem;
+        font-weight: bold;
+        color: #EC6600;
+		padding: 40px 32px 0 32px;
+        /* text-align: center; */
+        width: 100%;
+      }
+      .page-subtitle {
+        /* font-family: 'SHBreeHeadlineGlobal', sans-serif; */
+        font-size: 2.5rem;
+        color: white;
+        padding: 0 32px 20px 32px;
+        width: 100%;
       }
       .svg-content {
         width: 100%;
-        height: 100%;
+        height: auto;
+        max-height: 100%;
         object-fit: contain;
         pointer-events: none; /* 关键：触摸事件穿透SVG */
+        padding: 50px;
       }
       .page-indicator {
         position: absolute;
@@ -173,27 +199,40 @@
 			let pageData = [];
 			let currentPage = 0;
 			let totalPages = 0;
+			let pageType = '';
 
 			init();
 
 			function init() {
 				const urlParams = new URLSearchParams(window.location.search);
 				const pageParam = urlParams.get('page');
+				pageType = urlParams.get('type') || ''; // 获取页面参数
 				currentPage = pageParam ? parseInt(pageParam) - 1 : 0;
 				loadPageData();
 			}
 
 			function loadPageData() {
 				$.getJSON('./data.json', function (data) {
-					pageData = data.page;
-					totalPages = pageData.length;
-					if (currentPage < 0) currentPage = 0;
-					if (currentPage >= totalPages) currentPage = totalPages - 1;
-					renderPageContent();
-					renderPageIndicator();
-					bindEvents();
-					updatePageButtons(); // ✅ 初始化时更新按钮显示状态
-				}).fail(() => console.error('加载页面数据失败'));
+					// 检查页面类型是否存在
+					if (pageType && data.hasOwnProperty(pageType)) {
+						pageData = data[pageType];
+						totalPages = pageData.length;
+						if (currentPage < 0) currentPage = 0;
+						if (currentPage >= totalPages) currentPage = totalPages - 1;
+						renderPageContent();
+						renderPageIndicator();
+						bindEvents();
+						updatePageButtons(); // 初始化时更新按钮显示状态
+					} else {
+						// 如果页面类型不存在，弹出提示并返回到首页
+						alert('访问的页面不存在！');
+						window.location.href = './index.html';
+					}
+				}).fail(() => {
+					console.error('加载页面数据失败');
+					alert('加载页面数据失败！');
+					window.location.href = './index.html';
+				});
 			}
 
 			function renderPageContent() {
@@ -201,6 +240,21 @@
 				contentWrapper.empty();
 				pageData.forEach((page) => {
 					const svgContainer = $('<div class="svg-container"></div>');
+					
+					// 添加标题元素
+					if (page.title) {
+						const titleElement = $('<div class="page-title"></div>');
+						titleElement.html(page.title);
+						svgContainer.append(titleElement);
+					}
+					
+					// 添加副标题元素
+					if (page.subtitle) {
+						const subtitleElement = $('<div class="page-subtitle"></div>');
+						subtitleElement.html(page.subtitle);
+						svgContainer.append(subtitleElement);
+					}
+					
 					const svgContent = $('<object class="svg-content" type="image/svg+xml"></object>');
 					svgContent.attr('data', page.URL);
 					svgContainer.append(svgContent);
@@ -253,10 +307,11 @@
 				currentPage = pageIndex;
 				const url = new URL(window.location.href);
 				url.searchParams.set('page', currentPage + 1);
+				url.searchParams.set('type', pageType); // 保持页面类型参数
 				window.history.pushState({}, '', url);
 				updateContentPosition();
 				updatePageIndicator();
-				updatePageButtons(); // ✅ 翻页后更新按钮状态
+				updatePageButtons(); // 翻页后更新按钮状态
 			}
 
 			function updateContentPosition() {
@@ -268,7 +323,7 @@
 				$('.indicator-dot').removeClass('active').eq(currentPage).addClass('active');
 			}
 
-			// ✅ 新增：根据页码控制翻页按钮显示/隐藏
+			// 根据页码控制翻页按钮显示/隐藏
 			function updatePageButtons() {
 				const leftBtn = $('#leftButton');
 				const rightBtn = $('#rightButton');
