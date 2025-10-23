@@ -1,13 +1,117 @@
 {
-    "page": [
+    "核心优势": [
         {
-            "URL": "./data/1.svg"
+            "URL": "./data/核心优势/1.svg",
+            "title": "子页面A标题<br/>一",
+            "subtitle": "副标<br/>题一"
         },
         {
-            "URL": "./data/2.svg"
+            "URL": "./data/核心优势/2.svg",
+            "title": "子页面A标题二",
+            "subtitle": "副标题二"
         },
         {
-            "URL": "./data/3.svg"
+            "URL": "./data/核心优势/3.svg",
+            "title": "子页面A标题三",
+            "subtitle": "副标题三"
+        },
+        {
+            "URL": "./data/核心优势/4.svg",
+            "title": "子页面A标题二",
+            "subtitle": "副标题二"
+        },
+        {
+            "URL": "./data/核心优势/5.svg",
+            "title": "子页面A标题二",
+            "subtitle": "副标题二"
+        }
+    ],
+    "超清影像": [
+        {
+            "URL": "./data/1.svg",
+            "title": "子页面B标题<br/>一",
+            "subtitle": "副标<br/>题一"
+        },
+        {
+            "URL": "./data/2.svg",
+            "title": "子页面B标题二",
+            "subtitle": "副标题二"
+        },
+        {
+            "URL": "./data/3.svg",
+            "title": "子页面B标题三",
+            "subtitle": "副标题三"
+        },
+        {
+            "URL": "./data/4.svg",
+            "title": "子页面B标题二",
+            "subtitle": "副标题二1"
+        },
+        {
+            "URL": "./data/5.svg",
+            "title": "子页面B标题三",
+            "subtitle": "副标题三2"
+        },
+        {
+            "URL": "./data/6.svg",
+            "title": "子页面B标题二",
+            "subtitle": "副标题二3"
+        },
+        {
+            "URL": "./data/7.svg",
+            "title": "子页面B标题三",
+            "subtitle": "副标题三4"
+        }
+    ],
+    "智能流程": [
+        {
+            "URL": "./data/1.svg",
+            "title": "子页面C标题<br/>一",
+            "subtitle": "副标<br/>题一"
+        },
+        {
+            "URL": "./data/2.svg",
+            "title": "子页面C标题二",
+            "subtitle": "副标题二"
+        },
+        {
+            "URL": "./data/3.svg",
+            "title": "子页面C标题三",
+            "subtitle": "副标题三"
+        }
+    ],
+    "赋能": [
+        {
+            "URL": "./data/1.svg",
+            "title": "子页面C标题<br/>一",
+            "subtitle": "副标<br/>题一"
+        },
+        {
+            "URL": "./data/2.svg",
+            "title": "子页面C标题二",
+            "subtitle": "副标题二"
+        },
+        {
+            "URL": "./data/3.svg",
+            "title": "子页面C标题三",
+            "subtitle": "副标题三"
+        }
+    ],
+    "病例库": [
+        {
+            "URL": "./data/1.svg",
+            "title": "子页面C标题<br/>一",
+            "subtitle": "副标<br/>题一"
+        },
+        {
+            "URL": "./data/2.svg",
+            "title": "子页面C标题二",
+            "subtitle": "副标题二"
+        },
+        {
+            "URL": "./data/3.svg",
+            "title": "子页面C标题三",
+            "subtitle": "副标题三"
         }
     ]
 }
