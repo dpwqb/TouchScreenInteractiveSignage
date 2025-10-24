@@ -13,7 +13,7 @@
         {
             "URL": "./data/核心优势/3.svg",
             "title": "100% 等中心超清影像<br/>—Hypersight“广域鹰眼”",
-            "subtitle": "影像与治疗<font style='color: blue;'>同心同环</font>设计<br/>为精准放疗保驾护航"
+            "subtitle": "影像与治疗<font style='color: #009EA7;'>同心同环</font>设计<br/>为精准放疗保驾护航"
         },
         {
             "URL": "./data/核心优势/4.svg",
@@ -23,85 +23,119 @@
         {
             "URL": "./data/核心优势/5.svg",
             "title": "及时洞察变化-ART可视化技术,关注治疗每一步",
-            "subtitle": "副标题二"
+            "subtitle": "可化剂量监测量化精准治疗<br/>避免过度治疗或欠治疗"
         }
     ],
     "超清影像": [
         {
             "URL": "./data/超清影像/1.svg",
-            "title": "全新一代 Ethos<br/>等中心 CT-Linac",
-            "subtitle": "全球首款人工智能一体化<br/>在线自适应放疗平台"
+            "title": "Hypersight 2D kv<br/>硬币影像"
         },
         {
             "URL": "./data/超清影像/2.svg",
-            "title": "Ethos 四大技术与三大特点",
-            "subtitle": "<font style='font-size: 2rem;'>*唯一获得NMPA、FDA、CE认证的在线自适应系统</font>"
+            "title": "Hypersight 2D kv<br/>硬币影像"
         },
         {
             "URL": "./data/超清影像/3.svg",
-            "title": "100% 等中心超清影像<br/>—Hypersight“广域鹰眼”",
-            "subtitle": "影像与治疗<font style='color: blue;'>同心同环</font>设计<br/>为精准放疗保驾护航"
+            "title": "HyperSight<br/>头颈高质量影像库"
         },
         {
             "URL": "./data/超清影像/4.svg",
-            "title": "人工智能驱动一基于深度<br/>学习卷积神经网络(CNNS)",
-            "subtitle": "全球顶级癌症中心智慧结晶<br/>完美契合中国患者需求"
+            "title": "HyperSight<br/>胸部高质量影像库"
         },
         {
             "URL": "./data/超清影像/5.svg",
-            "title": "及时洞察变化-ART可视化技术,关注治疗每一步",
-            "subtitle": "副标题二"
+            "title": "HyperSight<br/>腹部高质量影像库"
+        },
+        {
+            "URL": "./data/超清影像/6.svg",
+            "title": "HyperSight<br/>盆腔高质量影像库"
         }
     ],
     "智能流程": [
         {
-            "URL": "./data/1.svg",
-            "title": "子页面C标题<br/>一",
-            "subtitle": "副标<br/>题一"
+            "URL": "./data/智能流程/1.svg",
+            "title": "Ethos 为每位肿瘤患者提供<br/>量身定制、独一无二的<br/>自适应“智慧”放疗解决方案。"
         },
         {
-            "URL": "./data/2.svg",
-            "title": "子页面C标题二",
-            "subtitle": "副标题二"
+            "URL": "./data/智能流程/2.svg",
+            "title": "中国宫颈癌现状"
         },
         {
-            "URL": "./data/3.svg",
-            "title": "子页面C标题三",
-            "subtitle": "副标题三"
+            "URL": "./data/智能流程/3.svg",
+            "title": "放疗技术亟待创新:<br/>参与全期别治疗的常规<br/>放疗技术，无法随机应变"
+        },
+        {
+            "URL": "./data/智能流程/4.svg",
+            "title": "Ethos自适应放疗应运而生，<br/>宫颈癌的“智能巡航导弹”"
         }
     ],
     "赋能": [
         {
-            "URL": "./data/1.svg",
-            "title": "子页面C标题<br/>一",
-            "subtitle": "副标<br/>题一"
+            "URL": "./data/赋能/1.svg",
+            "title": "宫颈癌治疗的新革命"
         },
         {
-            "URL": "./data/2.svg",
-            "title": "子页面C标题二",
-            "subtitle": "副标题二"
+            "URL": "./data/赋能/2.svg",
+            "title": "宫颈癌常规放疗现状与挑战"
         },
         {
-            "URL": "./data/3.svg",
-            "title": "子页面C标题三",
-            "subtitle": "副标题三"
+            "URL": "./data/赋能/3.svg",
+            "title": "智能影像全面赋能<br/>宫颈癌放射治疗链路"
+        },
+        {
+            "URL": "./data/赋能/4.svg",
+            "title": "内外兼修：<br/>宫颈癌治疗“三英聚力”",
+            "subtitle": "宫颈癌治疗迈入“更短更优”治疗新范式"
+        },
+        {
+            "URL": "./data/赋能/5.svg",
+            "title": "开启宫颈癌<br/>个体化治疗新未来"
         }
     ],
     "病例库": [
         {
-            "URL": "./data/1.svg",
-            "title": "子页面C标题<br/>一",
-            "subtitle": "副标<br/>题一"
+            "URL": "./data/病例库/1.svg",
+            "title": "自适应放射外科复合手术室"
         },
         {
-            "URL": "./data/2.svg",
-            "title": "子页面C标题二",
-            "subtitle": "副标题二"
+            "URL": "./data/病例库/2.svg",
+            "title": "肿瘤放射外科<br/>治疗一站式完成",
+            "subtitle": "实现治疗效率与临床获益的更大优化"
         },
         {
-            "URL": "./data/3.svg",
-            "title": "子页面C标题三",
-            "subtitle": "副标题三"
+            "URL": "./data/病例库/3.svg",
+            "title": "基于MRI引导的分体式<br/>自适应放疗系统(MARS)",
+            "subtitle": "无缝临床流程，在首个Ethos在线自适应<br/>系统中增加每日/每周引导的磁共振图像<br/>来追踪分次间肿瘤的动态变化"
+        },
+        {
+            "URL": "./data/病例库/4.svg",
+            "title": "人工智能驱动的<br/>多模态影像引导在线<br/>自适应放疗解决方案"
+        },
+        {
+            "URL": "./data/病例库/5.svg",
+            "title": "自适应放射外科复合手术室",
+            "subtitle": "AI多模态影像引导的肿瘤<br/>自适应放射外科治疗"
+        },
+        {
+            "URL": "./data/病例库/6.svg",
+            "title": "MAGNETOM Free.Max RT",
+            "subtitle": "全新超大孔径磁共振模拟定位"
+        },
+        {
+            "URL": "./data/病例库/7.svg",
+            "title": "专业为放疗设计的磁共振<br/><font style='color: #009EA7;'>80cm</font> 才是真正的MR-SIM"
+        },
+        {
+            "URL": "./data/病例库/8.svg",
+            "title": "最自由安装的超导<br/><font style='color: #009EA7;'>摆脱传统的安装限制<font>"
+        },
+        {
+            "URL": "./data/病例库/9.svg"
+        },
+        {
+            "URL": "./data/病例库/10.svg",
+            "title": "创新场强成像优势和价值"
         }
     ]
 }

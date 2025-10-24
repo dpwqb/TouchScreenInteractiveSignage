@@ -87,7 +87,7 @@
         position: absolute;
         top: 100px;
         left: 0;
-        width: 90%;
+        width: 100%;
         bottom: 40px;
         overflow: hidden;
         touch-action: pan-y;
@@ -107,32 +107,62 @@
         flex-direction: column;
         justify-content: flex-start;
         align-items: center;
+        /* padding: 40px; */
+        box-sizing: border-box;
+        overflow: hidden; /* 防止内容溢出 */
+        position: relative; /* 为内部绝对定位提供参考 */
+      }
+      .content-inner-wrapper {
+        width: 100%;
+        height: 100%;
         padding: 20px;
         box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
       }
       .page-title {
         font-family: 'SHBreeHeadlineGlobal', sans-serif;
-        font-size: 5rem;
+        font-size: clamp(2rem, 4vw, 5rem); /* 响应式字体大小 */
         font-weight: bold;
         color: #EC6600;
-		/* padding: 40px 32px 0 32px; */
+		padding: 40px 32px 0 32px;
+        width: 100%;
+        max-width: 100%;
         /* text-align: center; */
-        width: 90%;
+        word-wrap: break-word; /* 长文本自动换行 */
+        overflow-wrap: break-word;
+        margin-bottom: 10px;
+        box-sizing: border-box;
       }
       .page-subtitle {
-        /* font-family: 'SHBreeHeadlineGlobal', sans-serif; */
-        font-size: 3rem;
+        font-size: clamp(1.2rem, 2.5vw, 3rem); /* 响应式字体大小 */
         color: white;
-        /* padding: 0 32px 20px 32px; */
-        width: 90%;
+        width: 100%;
+        max-width: 100%;
+		padding: 0 32px;
+        word-wrap: break-word; /* 长文本自动换行 */
+        overflow-wrap: break-word;
+        margin-bottom: 50px;
+        box-sizing: border-box;
+      }
+      .svg-wrapper {
+        width: auto;
+		margin: 10px;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        box-sizing: border-box;
       }
       .svg-content {
-        width: 100%;
+        width: 90%;
         height: auto;
-        max-height: 100%;
+        max-width: 100%;
         object-fit: contain;
         pointer-events: none; /* 关键：触摸事件穿透SVG */
-        padding: 50px;
+        box-sizing: border-box;
       }
       .page-indicator {
         position: absolute;
@@ -152,6 +182,37 @@
       }
       .indicator-dot.active {
         background-color: white;
+      }
+      
+      /* 响应式媒体查询 */
+      @media (max-width: 768px) {
+        .content-inner-wrapper {
+          padding: 15px;
+        }
+        .page-title {
+          font-size: clamp(1.5rem, 3vw, 3rem);
+        }
+        .page-subtitle {
+          font-size: clamp(1rem, 2vw, 2rem);
+        }
+      }
+      
+      @media (max-width: 480px) {
+        .content-container {
+          padding: 10px;
+        }
+        .svg-container {
+          padding: 10px;
+        }
+        .content-inner-wrapper {
+          padding: 10px;
+        }
+        .page-title {
+          font-size: clamp(1.2rem, 2.5vw, 2.5rem);
+        }
+        .page-subtitle {
+          font-size: clamp(0.9rem, 1.8vw, 1.8rem);
+        }
       }
     }
   </style>
@@ -185,7 +246,7 @@
 		<!-- 内容容器 -->
 		<div class="content-container">
 			<div class="content-wrapper" id="contentWrapper">
-				<!-- SVG内容由JS加载 -->
+				<!-- 内容由JS加载 -->
 			</div>
 		</div>
 
@@ -241,23 +302,32 @@
 				pageData.forEach((page) => {
 					const svgContainer = $('<div class="svg-container"></div>');
 					
+					// 创建内容内部包装器
+					const contentInnerWrapper = $('<div class="content-inner-wrapper"></div>');
+					
 					// 添加标题元素
 					if (page.title) {
 						const titleElement = $('<div class="page-title"></div>');
 						titleElement.html(page.title);
-						svgContainer.append(titleElement);
+						contentInnerWrapper.append(titleElement);
 					}
 					
 					// 添加副标题元素
 					if (page.subtitle) {
 						const subtitleElement = $('<div class="page-subtitle"></div>');
 						subtitleElement.html(page.subtitle);
-						svgContainer.append(subtitleElement);
+						contentInnerWrapper.append(subtitleElement);
 					}
 					
+					// 创建SVG包装器
+					const svgWrapper = $('<div class="svg-wrapper"></div>');
 					const svgContent = $('<object class="svg-content" type="image/svg+xml"></object>');
 					svgContent.attr('data', page.URL);
-					svgContainer.append(svgContent);
+					svgWrapper.append(svgContent);
+					contentInnerWrapper.append(svgWrapper);
+					
+					// 将内容内部包装器添加到容器中
+					svgContainer.append(contentInnerWrapper);
 					contentWrapper.append(svgContainer);
 				});
 				updateContentPosition();
