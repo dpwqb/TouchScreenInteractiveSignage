@@ -2,65 +2,55 @@
     "核心优势": [
         {
             "URL": "./data/核心优势/1.svg",
-            "title": "子页面A标题<br/>一",
-            "subtitle": "副标<br/>题一"
+            "title": "全新一代 Ethos<br/>等中心 CT-Linac",
+            "subtitle": "全球首款人工智能一体化<br/>在线自适应放疗平台"
         },
         {
             "URL": "./data/核心优势/2.svg",
-            "title": "子页面A标题二",
-            "subtitle": "副标题二"
+            "title": "Ethos 四大技术与三大特点",
+            "subtitle": "*唯一获得NMPA、FDA、CE认证的在线自适应系统"
         },
         {
             "URL": "./data/核心优势/3.svg",
-            "title": "子页面A标题三",
-            "subtitle": "副标题三"
+            "title": "100% 等中心超清影像<br/>—Hypersight“广域鹰眼”",
+            "subtitle": "影像与治疗<font style='color: blue;'>同心同环</font>设计<br/>为精准放疗保驾护航"
         },
         {
             "URL": "./data/核心优势/4.svg",
-            "title": "子页面A标题二",
-            "subtitle": "副标题二"
+            "title": "人工智能驱动一基于深度<br/>学习卷积神经网络(CNNS)",
+            "subtitle": "全球顶级癌症中心智慧结晶<br/>完美契合中国患者需求"
         },
         {
             "URL": "./data/核心优势/5.svg",
-            "title": "子页面A标题二",
+            "title": "及时洞察变化-ART可视化技术,关注治疗每一步",
             "subtitle": "副标题二"
         }
     ],
     "超清影像": [
         {
-            "URL": "./data/1.svg",
-            "title": "子页面B标题<br/>一",
-            "subtitle": "副标<br/>题一"
+            "URL": "./data/超清影像/1.svg",
+            "title": "全新一代 Ethos<br/>等中心 CT-Linac",
+            "subtitle": "全球首款人工智能一体化<br/>在线自适应放疗平台"
         },
         {
-            "URL": "./data/2.svg",
-            "title": "子页面B标题二",
+            "URL": "./data/超清影像/2.svg",
+            "title": "Ethos 四大技术与三大特点",
+            "subtitle": "<font style='font-size: 2rem;'>*唯一获得NMPA、FDA、CE认证的在线自适应系统</font>"
+        },
+        {
+            "URL": "./data/超清影像/3.svg",
+            "title": "100% 等中心超清影像<br/>—Hypersight“广域鹰眼”",
+            "subtitle": "影像与治疗<font style='color: blue;'>同心同环</font>设计<br/>为精准放疗保驾护航"
+        },
+        {
+            "URL": "./data/超清影像/4.svg",
+            "title": "人工智能驱动一基于深度<br/>学习卷积神经网络(CNNS)",
+            "subtitle": "全球顶级癌症中心智慧结晶<br/>完美契合中国患者需求"
+        },
+        {
+            "URL": "./data/超清影像/5.svg",
+            "title": "及时洞察变化-ART可视化技术,关注治疗每一步",
             "subtitle": "副标题二"
-        },
-        {
-            "URL": "./data/3.svg",
-            "title": "子页面B标题三",
-            "subtitle": "副标题三"
-        },
-        {
-            "URL": "./data/4.svg",
-            "title": "子页面B标题二",
-            "subtitle": "副标题二1"
-        },
-        {
-            "URL": "./data/5.svg",
-            "title": "子页面B标题三",
-            "subtitle": "副标题三2"
-        },
-        {
-            "URL": "./data/6.svg",
-            "title": "子页面B标题二",
-            "subtitle": "副标题二3"
-        },
-        {
-            "URL": "./data/7.svg",
-            "title": "子页面B标题三",
-            "subtitle": "副标题三4"
         }
     ],
     "智能流程": [
