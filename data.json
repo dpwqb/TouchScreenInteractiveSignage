@@ -28,28 +28,22 @@
     ],
     "超清影像": [
         {
-            "URL": "./data/超清影像/1.svg",
-            "title": "Hypersight 2D kv<br/>硬币影像"
+            "URL": "./data/超清影像/1.svg"
         },
         {
-            "URL": "./data/超清影像/2.svg",
-            "title": "Hypersight 2D kv<br/>硬币影像"
+            "URL": "./data/超清影像/2.svg"
         },
         {
-            "URL": "./data/超清影像/3.svg",
-            "title": "HyperSight<br/>头颈高质量影像库"
+            "URL": "./data/超清影像/3.svg"
         },
         {
-            "URL": "./data/超清影像/4.svg",
-            "title": "HyperSight<br/>胸部高质量影像库"
+            "URL": "./data/超清影像/4.svg"
         },
         {
-            "URL": "./data/超清影像/5.svg",
-            "title": "HyperSight<br/>腹部高质量影像库"
+            "URL": "./data/超清影像/5.svg"
         },
         {
-            "URL": "./data/超清影像/6.svg",
-            "title": "HyperSight<br/>盆腔高质量影像库"
+            "URL": "./data/超清影像/6.svg"
         }
     ],
     "智能流程": [
