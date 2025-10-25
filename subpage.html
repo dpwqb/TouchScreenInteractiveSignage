@@ -222,13 +222,13 @@
   </style>
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-black">
 	<div class="page-container">
 		<!-- 背景图片 -->
 		<div class="bg-image" style="background-image: url('./img/bg/bg.jpg')"></div>
 
 		<!-- 返回按钮 -->
-		<div class="nav-button back-button" onclick="window.location.href='./home.html'">
+		<div class="nav-button back-button" onclick="getReturnUrl()">
 			<img src="./img/back.svg" alt="返回首页" class="w-full h-full object-contain">
 		</div>
 
@@ -419,6 +419,17 @@
 				}
 			}
 		});
+
+		// 获取返回URL的函数
+		function getReturnUrl() {
+			const urlParams = new URLSearchParams(window.location.search);
+			const returnPage = urlParams.get('returnPage');
+			if (returnPage) {
+				window.location.href = `./index.html?page=${returnPage}`;
+			} else {
+				window.location.href = './index.html?page=0';
+			}
+		}
 	</script>
 
 </body>
