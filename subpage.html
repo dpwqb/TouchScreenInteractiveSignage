@@ -87,7 +87,9 @@
         position: absolute;
         top: 100px;
         left: 0;
-        width: 100%;
+        /* width: 100%; */
+		min-width: 100dvw;
+		max-width: 100dvw;
         bottom: 40px;
         overflow: hidden;
         touch-action: pan-y;
@@ -101,6 +103,8 @@
         transition: transform 0.5s ease;
       }
       .svg-container {
+		min-width: 100dvw;
+		max-width: 100dvw;
         flex: 0 0 100%;
         height: 100%;
         display: flex;
