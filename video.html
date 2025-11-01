@@ -6,6 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<title>Ethos-video</title>
 	<script src="./js/tailwindcss.js"></script>
+	<script src="./js/swiper-element-bundle.min.js"></script>
 	<style>
 		@font-face {
 			font-family: 'SHBreeHeadlineGlobal';
@@ -34,6 +35,25 @@
                 touch-action: pan-x pan-y;
                 background-size: cover;
                 background-position: center;
+            }
+            /* Swiper 容器样式 */
+            swiper-container {
+                width: 100%;
+                height: 100vh;
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: 1;
+            }
+            /* Swiper 幻灯片样式 */
+            swiper-slide {
+                position: relative;
+                width: 100%;
+                height: 100vh;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
             }
             /* 首页标题样式 */
             .home-title {
@@ -86,7 +106,7 @@
                 width: clamp(128px, 16vw, 512px);
                 height: clamp(64px, 8vw, 200px);
                 top: 20px;
-                z-index: 10;
+                z-index: 20;
                 opacity: 0.8;
                 transition: opacity 0.3s;
                 right: 20px;
@@ -101,7 +121,7 @@
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%, -50%);
-                z-index: 5;
+                z-index: 2;
                 width: 100%;
                 /* height: 100%; */
                 display: flex;
@@ -122,16 +142,58 @@
 			<img src="./img/logo.svg" alt="Logo" class="w-full h-full object-contain">
 		</div>
 
-		<!-- 首页标题 -->
-		<div class="home-title">Ethos 2.0<br/>Launch Video</div>
+		<!-- Swiper 滑动容器 -->
+		<swiper-container 
+			class="swiper-container"
+			direction="horizontal"
+			slides-per-view="1"
+			speed="500"
+			touch-ratio="1"
+			touch-angle="45"
+			threshold="5"
+			space-between="0"
+			loop="false"
+			navigation="false"
+			pagination="false"
+			scrollbar="false">
+			
+			<!-- 第一页：原内容 -->
+			<swiper-slide>
+				<!-- 首页标题 -->
+				<div class="home-title">Ethos 2.0<br/>Launch Video</div>
 
-		<!-- 中心产品视频 -->
-		<div class="center-video">
-			<video autoplay muted loop class="product-video">
-				<source src="./data/Ethos-video.mp4" type="video/mp4">
-				浏览器不支持视频播放。
-			</video>
-		</div>
+				<!-- 待机视频 -->
+				<div class="center-video">
+					<video autoplay muted loop class="product-video">
+						<source src="./data/Ethos-video.mp4" type="video/mp4">
+						浏览器不支持视频播放。
+					</video>
+				</div>
+			</swiper-slide>
+
+			<!-- 第二页：可添加其他内容 -->
+			<swiper-slide>
+				<div class="home-title">Ethos 2.0<br/>Feature Showcase</div>
+				<div class="center-video">
+					<video controls class="product-video">
+						<source src="./data/Ethos-video.mp4" type="video/mp4">
+						浏览器不支持视频播放。
+					</video>
+				</div>
+			</swiper-slide>
+
+			<!-- 第三页：可添加其他内容 -->
+			<swiper-slide>
+				<div class="home-title">Ethos 2.0<br/>Technology Innovation</div>
+				<div class="center-video">
+					<video controls class="product-video">
+						<source src="./data/Ethos-video.mp4" type="video/mp4">
+						浏览器不支持视频播放。
+					</video>
+				</div>
+			</swiper-slide>
+
+		</swiper-container>
 
 	</div>
 
