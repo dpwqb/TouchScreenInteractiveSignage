@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>病例库子菜单</title>
+	<script src="./js/tailwindcss.js"></script>
+	<!-- 引入自定义字体 -->
+	<style>
+		@font-face {
+			font-family: 'SHBreeHeadlineGlobal';
+			src: url('./Fonts/sh-bree-headlineglobal-regular.ttf') format('truetype');
+		}
+	</style>
+	<script>
+		tailwind.config = {
+			theme: {
+				extend: {
+					colors: {
+						primary: '#4a6fa5',
+						secondary: '#e67e22',
+					}
+				}
+			}
+		}
+	</script>
+	<style type="text/tailwindcss">
+		@layer utilities {
+      .page-container {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+        touch-action: none; /* 防止浏览器默认滚动干扰 */
+      }
+      .bg-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+        z-index: -1;
+      }
+      .overlay-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('./data/智慧影像赋能/智慧影像赋能.png');
+        background-size: cover;
+        background-position: center;
+        z-index: 0;
+        opacity: 0.8;
+      }
+      .nav-button {
+        position: absolute;
+        z-index: 10;
+        cursor: pointer;
+        opacity: 0.8;
+        transition: opacity 0.3s;
+      }
+      .nav-button:hover {
+        opacity: 1;
+      }
+      .back-button {
+        right: 50px;
+        bottom: 50px;
+        width: clamp(64px, 8vw, 256px);
+        height: clamp(64px, 8vw, 256px);
+        top: auto;
+      }
+      .logo {
+        right: 50px;
+        top: 50px;
+        width: clamp(128px, 16vw, 512px);
+        height: auto;
+      }
+      .button-container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 50svw;
+        height: auto;
+        transform: translate(-50%, -50%);
+        display: flex;
+        flex-direction: column;
+        gap: clamp(50px, 8vh, 100px);
+        z-index: 10;
+        align-items: center;
+      }
+      .menu-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: transparent;
+        border: none;
+        padding: 0;
+        margin-bottom: 8svw;
+        width: 100%;
+        height: auto;
+      }
+      .menu-button:hover {
+        transform: scale(1.05);
+      }
+      .menu-button img {
+        max-width: 100%;
+        max-height: 100%;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+        cursor: pointer;
+        opacity: 0.9;
+        transition: opacity 0.3s ease;
+        pointer-events: auto;
+      }
+      .menu-button img:hover {
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-black">
+	<div class="page-container">
+		<!-- 背景图片 -->
+		<div class="bg-image" style="background-image: url('./img/bg/big.jpg')"></div>
+		
+		<!-- 叠加背景图片 -->
+		<div class="overlay-bg"></div>
+
+		<!-- Logo图标 -->
+		<div class="nav-button logo">
+			<img src="./img/logo.svg" alt="Logo" class="w-full h-full object-contain">
+		</div>
+
+		<!-- 返回主页按钮 -->
+		<div class="nav-button back-button" onclick="goToHome()">
+			<img src="./img/back.svg" alt="返回首页" class="w-full h-full object-contain">
+		</div>
+
+		<!-- 按钮容器 -->
+		<div class="button-container">
+			<!-- 按钮1 -->
+			<div class="menu-button">
+				<img src="./data/智慧影像赋能/5.1.svg" alt="MR-ART宫颈癌放疗新范式" onclick="goToSubpage('MR-ART宫颈癌放疗新范式', 1)">
+			</div>
+			<!-- 按钮2 -->
+			<div class="menu-button">
+				<img src="./data/智慧影像赋能/5.2.svg" alt="自适应放射外科复合手术室内" onclick="goToSubpage('自适应放射外科复合手术室', 1)">
+			</div>
+      <!-- 按钮3 -->
+			<div class="menu-button">
+				<img src="./data/智慧影像赋能/5.3.svg" alt="超大孔径模拟定位磁共振" onclick="goToSubpage('超大孔径模拟定位磁共振', 1)">
+			</div>
+		</div>
+	</div>
+
+	<script src="./js/jquery-1.8.3.min.js"></script>
+	<script>
+		// 返回主页函数
+		function goToHome() {
+			window.location.href = './index.html';
+		}
+		
+		// 跳转到子页面函数
+		function goToSubpage(type, page) {
+			window.location.href = `./subpage.html?type=${type}&page=${page}&returnPage=1`;
+		}
+	</script>
+</body>
+
+</html>

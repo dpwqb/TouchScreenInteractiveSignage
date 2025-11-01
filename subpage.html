@@ -46,21 +46,25 @@
       }
       .nav-button {
         position: absolute;
-        width: clamp(128px, 16vw, 512px);
-        height: clamp(64px, 8vw, 200px);
-		right:40px;
-        top: 40px;
         z-index: 10;
         cursor: pointer;
         opacity: 0.8;
         transition: opacity 0.3s;
       }
+	  .logo {
+		  right:50px;
+		  top: 50px;
+		  width: clamp(128px, 16vw, 512px);
+		  height: auto;
+	  }
       .nav-button:hover {
         opacity: 1;
       }
       .back-button {
-        right:40px;
-        bottom: 40px;
+        right:50px;
+        bottom: 50px;
+		width: clamp(64px, 8vw, 256px);
+        height: clamp(64px, 8vw, 256px);
         top: auto;
       }
       .page-button {
@@ -122,7 +126,7 @@
       .content-inner-wrapper {
         width: 100%;
         height: 100%;
-        padding: 20px;
+        /* padding: 20px; */
         box-sizing: border-box;
         display: flex;
         flex-direction: column;
@@ -154,22 +158,35 @@
         margin-bottom: 50px;
         box-sizing: border-box;
       }
+      .media-wrapper,
       .svg-wrapper {
-        width: auto;
-		margin: 10px;
-        height: 100%;
+        width: 100%;
+		/* margin: 10px; */
+        flex: 1 1 auto;
         display: flex;
         justify-content: center;
-        align-items: flex-start;
+        align-items: center;
         box-sizing: border-box;
+        overflow: hidden;
       }
+      .media-content,
       .svg-content {
-        width: 90%;
+        width: 100%;
         height: auto;
         max-width: 100%;
+        max-height: 100%;
         object-fit: contain;
-        pointer-events: none; /* 关键：触摸事件穿透SVG */
+        pointer-events: none;
         box-sizing: border-box;
+      }
+      .media-content.media-content-video {
+        height: 100%;
+      }
+      .media-fallback {
+        width: 100%;
+        color: white;
+        font-size: clamp(1rem, 2vw, 2.5rem);
+        text-align: center;
       }
       .page-indicator {
         position: absolute;
@@ -327,17 +344,17 @@
 					}
 					
 					// 创建SVG包装器
-					const svgWrapper = $('<div class="svg-wrapper"></div>');
-					const svgContent = $('<object class="svg-content" type="image/svg+xml"></object>');
-					svgContent.attr('data', page.URL);
-					svgWrapper.append(svgContent);
-					contentInnerWrapper.append(svgWrapper);
+          const mediaWrapper = $('<div class="media-wrapper"></div>');
+          const mediaElement = createMediaElement(page.URL);
+          mediaWrapper.append(mediaElement);
+          contentInnerWrapper.append(mediaWrapper);
 					
 					// 将内容内部包装器添加到容器中
 					svgContainer.append(contentInnerWrapper);
 					contentWrapper.append(svgContainer);
 				});
 				updateContentPosition();
+        handleMediaPlayback();
 			}
 
 			function renderPageIndicator() {
@@ -355,24 +372,32 @@
 				$('#rightButton').on('click', () => goToPage(currentPage + 1));
 
 				const touchArea = document.querySelector('.page-container');
-				let startX = 0, endX = 0;
+				let startX = 0;
+				let endX = 0;
 				const threshold = 50;
 
-				touchArea.addEventListener('touchstart', e => {
-					if (e.touches.length > 0) startX = e.touches[0].clientX;
+				touchArea.addEventListener('touchstart', (e) => {
+					if (e.touches.length > 0) {
+						startX = e.touches[0].clientX;
+					}
 					endX = startX;
 				}, { passive: true });
 
-				touchArea.addEventListener('touchmove', e => {
-					if (e.touches.length > 0) endX = e.touches[0].clientX;
+				touchArea.addEventListener('touchmove', (e) => {
+					if (e.touches.length > 0) {
+						endX = e.touches[0].clientX;
+					}
 					e.preventDefault();
 				}, { passive: false });
 
 				touchArea.addEventListener('touchend', () => {
 					const diffX = startX - endX;
 					if (Math.abs(diffX) > threshold) {
-						if (diffX > 0) goToPage(currentPage + 1);
-						else goToPage(currentPage - 1);
+						if (diffX > 0) {
+							goToPage(currentPage + 1);
+						} else {
+							goToPage(currentPage - 1);
+						}
 					}
 				});
 
@@ -394,6 +419,7 @@
 			function updateContentPosition() {
 				const containerWidth = $('.content-container').width();
 				$('#contentWrapper').css('transform', `translateX(${-currentPage * containerWidth}px)`);
+        handleMediaPlayback();
 			}
 
 			function updatePageIndicator() {
@@ -420,8 +446,64 @@
 						rightBtn.fadeIn(200);
 					}
 				}
-			}
-		});
+		}
+
+      function createMediaElement(url = '') {
+		const safeUrl = url || '';
+		const urlWithoutQuery = safeUrl.split('?')[0];
+		const urlSegments = urlWithoutQuery.split('.');
+		const extension = urlSegments.length > 1 ? urlSegments.pop().toLowerCase() : '';
+        const imageTypes = ['png', 'jpg', 'jpeg', 'gif', 'bmp', 'webp', 'avif'];
+        const videoTypes = ['mp4', 'webm', 'ogg', 'mov'];
+
+        if (extension === 'svg') {
+          const objectElement = $('<object class="media-content media-content-object" type="image/svg+xml"></object>');
+          objectElement.attr('data', safeUrl);
+          return objectElement;
+        }
+
+        if (imageTypes.includes(extension)) {
+          const imageElement = $('<img class="media-content" alt="" draggable="false" />');
+          imageElement.attr('src', safeUrl);
+          return imageElement;
+        }
+
+        if (videoTypes.includes(extension)) {
+          const videoElement = $('<video class="media-content media-content-video" muted playsinline loop></video>');
+          videoElement.attr('src', safeUrl);
+          videoElement.attr('autoplay', 'autoplay');
+          return videoElement;
+        }
+
+        const fallbackElement = $('<div class="media-fallback"></div>');
+        fallbackElement.text('暂不支持的媒体格式');
+        return fallbackElement;
+      }
+
+      function handleMediaPlayback() {
+        $('.svg-container').each(function (index) {
+          const isActive = index === currentPage;
+          $(this).find('.media-content-video').each(function () {
+            const video = this;
+            if (isActive) {
+              const playMethod = video.play;
+              if (typeof playMethod === 'function') {
+                const playPromise = playMethod.call(video);
+                if (playPromise && typeof playPromise.then === 'function') {
+                  playPromise.catch(function () { });
+                }
+              }
+            } else {
+              const pauseMethod = video.pause;
+              if (typeof pauseMethod === 'function') {
+                pauseMethod.call(video);
+              }
+              video.currentTime = 0;
+            }
+          });
+        });
+      }
+	});
 
 		// 获取返回URL的函数
 		function getReturnUrl() {

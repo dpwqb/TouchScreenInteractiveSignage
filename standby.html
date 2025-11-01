@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>Ethos-video</title>
+	<script src="./js/tailwindcss.js"></script>
+	<script src="./js/swiper-element-bundle.min.js"></script>
+	<style>
+		@font-face {
+			font-family: 'SHBreeHeadlineGlobal';
+			src: url('./Fonts/sh-bree-headlineglobal-regular.ttf') format('truetype');
+		}
+	</style>
+	<script>
+		tailwind.config = {
+			theme: {
+				extend: {
+					colors: {
+						primary: '#4a6fa5',
+						secondary: '#e67e22',
+					}
+				}
+			}
+		}
+	</script>
+	<style type="text/tailwindcss">
+		@layer utilities {
+            .home-container {
+                position: relative;
+                width: 100%;
+                height: 100vh;
+                overflow: hidden;
+                touch-action: pan-x pan-y;
+                background-size: cover;
+                background-position: center;
+            }
+            /* Swiper 容器样式 */
+            swiper-container {
+                width: 100%;
+                height: 100vh;
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: 1;
+            }
+            /* Swiper 幻灯片样式 */
+            swiper-slide {
+                position: relative;
+                width: 100%;
+                height: 100vh;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+            /* 首页标题样式 */
+            .home-title {
+                font-family: 'SHBreeHeadlineGlobal', sans-serif;
+                font-size: clamp(3rem, 7vw, 8rem);
+                font-weight: bold;
+                color: #EC6600;
+                /* 标题居中显示 */
+                position: absolute;
+                top: 15%;
+                left: 50%;
+                transform: translateX(-50%);
+                text-align: center;
+                max-width: 80%; /* 限制宽度，避免文字溢出 */
+            }
+            /* 右侧按钮容器：垂直居中排列 */
+            .button-container {
+                position: absolute;
+                right: clamp(20px, 5vw, 50px); /* 右侧距离自适应 */
+                top: 50%; /* 垂直居中基准点 */
+                transform: translateY(-50%); /* 向上偏移自身50%，实现完美居中 */
+                display: flex;
+                flex-direction: column; /* 纵向排列按钮 */
+                gap: clamp(15px, 3vw, 30px); /* 按钮间垂直间距自适应 */
+                max-width: 300px; /* 限制最大宽度 */
+            }
+            /* 功能按钮样式 */
+            .function-button {
+                width: clamp(120px, 20vw, 250px); /* 按钮宽度自适应 */
+                height: clamp(120px, 20vw, 250px); /* 按钮高度自适应 */
+                cursor: pointer;
+                opacity: 0.85;
+                transition: all 0.3s ease;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            .function-button:hover {
+                opacity: 1;
+                transform: scale(1.05); /* 触摸反馈：轻微放大 */
+            }
+            .function-button img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain; 
+            }
+
+            .nav-button.logo {
+                position: absolute;
+                right: 50px;
+                top: 50px;
+                width: clamp(128px, 16vw, 512px);
+                height: auto;
+                z-index: 20;
+                opacity: 0.8;
+                transition: opacity 0.3s;
+            }
+            .nav-button.logo:hover {
+                opacity: 1;
+            }
+
+            /* 中心视频样式 */
+            .center-video {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                z-index: 2;
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            .product-video {
+                width: 100%;
+                object-fit: cover;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-black">
+	<div class="home-container" style="background-image: url('./img/bg/big.jpg')">
+		<div class="nav-button logo">
+			<img src="./img/logo.svg" alt="Logo" class="w-full h-full object-contain">
+		</div>
+
+		<!-- 首页标题 -->
+		<div class="home-title">Ethos 2.0<br />Launch Video</div>
+
+		<!-- 待机视频 -->
+		<div class="center-video">
+			<video autoplay muted loop class="product-video">
+				<source src="./data/Ethos2.0 Launch Video.mp4" type="video/mp4">
+				浏览器不支持视频播放。
+			</video>
+		</div>
+
+	</div>
+
+	<script src="./js/jquery-1.8.3.min.js"></script>
+</body>
+
+</html>

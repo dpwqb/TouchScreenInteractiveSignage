@@ -58,12 +58,12 @@
             /* 首页标题样式 */
             .home-title {
                 font-family: 'SHBreeHeadlineGlobal', sans-serif;
-                font-size: clamp(2.5rem, 5vw, 6rem);
+                font-size: clamp(3rem, 7vw, 8rem);
                 font-weight: bold;
                 color: #EC6600;
                 /* 标题居中显示 */
                 position: absolute;
-                top: clamp(80px, 15vh, 150px);
+                top: 15%;
                 left: 50%;
                 transform: translateX(-50%);
                 text-align: center;
@@ -103,13 +103,13 @@
 
             .nav-button.logo {
                 position: absolute;
+                right: 50px;
+                top: 50px;
                 width: clamp(128px, 16vw, 512px);
-                height: clamp(64px, 8vw, 200px);
-                top: 20px;
+                height: auto;
                 z-index: 20;
                 opacity: 0.8;
                 transition: opacity 0.3s;
-                right: 20px;
             }
             .nav-button.logo:hover {
                 opacity: 1;
@@ -123,7 +123,6 @@
                 transform: translate(-50%, -50%);
                 z-index: 2;
                 width: 100%;
-                /* height: 100%; */
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -132,14 +131,62 @@
                 width: 100%;
                 object-fit: cover;
             }
+            
+            /* 播放按钮样式 */
+            .play-button {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                z-index: 3;
+                width: 100px;
+                height: 100px;
+                cursor: pointer;
+                transition: opacity 0.3s;
+            }
+            
+            /* 翻页按钮样式 */
+            .page-button {
+                position: absolute;
+                width: clamp(32px, 6vw, 150px);
+                height: clamp(32px, 6vw, 150px);
+                top: 68%;
+                transform: translateY(-50%);
+                z-index: 20;
+                cursor: pointer;
+                opacity: 0.8;
+                transition: opacity 0.3s;
+            }
+            .page-button:hover {
+                opacity: 1;
+            }
+            .left-button {
+                left: 20px;
+            }
+            .right-button {
+                right: 20px;
+            }
+            .right-button img {
+                transform: scaleX(-1);
+            }
         }
     </style>
 </head>
 
 <body class="bg-black">
-	<div class="home-container" style="background-image: url('./img/bg/bg1.jpg')">
+	<div class="home-container" style="background-image: url('./img/bg/big.jpg')">
 		<div class="nav-button logo">
 			<img src="./img/logo.svg" alt="Logo" class="w-full h-full object-contain">
+		</div>
+
+		<!-- 左翻页按钮 -->
+		<div class="page-button left-button" id="leftButton" style="display: none;">
+			<img src="./img/left.svg" alt="上一页" class="w-full h-full object-contain">
+		</div>
+
+		<!-- 右翻页按钮 -->
+		<div class="page-button right-button" id="rightButton">
+			<img src="./img/left.svg" alt="下一页" class="w-full h-full object-contain">
 		</div>
 
 		<!-- Swiper 滑动容器 -->
@@ -157,39 +204,35 @@
 			pagination="false"
 			scrollbar="false">
 			
-			<!-- 第一页：原内容 -->
+			<!-- 第一页 -->
 			<swiper-slide>
 				<!-- 首页标题 -->
-				<div class="home-title">Ethos 2.0<br/>Launch Video</div>
+				<div class="home-title">智能流程</div>
 
-				<!-- 待机视频 -->
+				<!-- 视频 -->
 				<div class="center-video">
-					<video autoplay muted loop class="product-video">
-						<source src="./data/Ethos-video.mp4" type="video/mp4">
+					<video controls class="product-video">
+						<source src="./data/智能流程/智能流程.mp4" type="video/mp4">
 						浏览器不支持视频播放。
 					</video>
+					<!-- 播放按钮 -->
+					<img src="./img/play.svg" alt="播放" class="play-button" data-video-index="0">
 				</div>
 			</swiper-slide>
 
-			<!-- 第二页：可添加其他内容 -->
+			<!-- 第二页 -->
 			<swiper-slide>
-				<div class="home-title">Ethos 2.0<br/>Feature Showcase</div>
-				<div class="center-video">
-					<video controls class="product-video">
-						<source src="./data/Ethos-video.mp4" type="video/mp4">
-						浏览器不支持视频播放。
-					</video>
-				</div>
-			</swiper-slide>
+				<!-- 首页标题 -->
+				<div class="home-title">智能流程</div>
 
-			<!-- 第三页：可添加其他内容 -->
-			<swiper-slide>
-				<div class="home-title">Ethos 2.0<br/>Technology Innovation</div>
+				<!-- 视频 -->
 				<div class="center-video">
 					<video controls class="product-video">
-						<source src="./data/Ethos-video.mp4" type="video/mp4">
+						<source src="./data/智能流程/智能流程.mp4" type="video/mp4">
 						浏览器不支持视频播放。
 					</video>
+					<!-- 播放按钮 -->
+					<img src="./img/play.svg" alt="播放" class="play-button" data-video-index="1">
 				</div>
 			</swiper-slide>
 
@@ -198,6 +241,123 @@
 	</div>
 
 	<script src="./js/jquery-1.8.3.min.js"></script>
+	<script>
+		// 视频播放控制逻辑
+		document.addEventListener('DOMContentLoaded', function() {
+			// 获取所有的视频元素和播放按钮
+			const videos = document.querySelectorAll('.product-video');
+			const playButtons = document.querySelectorAll('.play-button');
+			
+			// 获取Swiper实例和翻页按钮
+			const swiperContainer = document.querySelector('swiper-container');
+			const leftButton = document.getElementById('leftButton');
+			const rightButton = document.getElementById('rightButton');
+			
+			// 初始化当前页码和总页数
+			let currentPage = 0;
+			const totalPages = document.querySelectorAll('swiper-slide').length;
+			
+			// 确保Swiper已初始化
+			if (!swiperContainer.swiper) {
+				// 如果Swiper未初始化，则手动初始化
+				swiperContainer.initialize();
+			}
+			
+			// 更新翻页按钮状态
+			function updatePageButtons() {
+				if (totalPages <= 1) {
+					leftButton.style.display = 'none';
+					rightButton.style.display = 'none';
+				} else {
+					if (currentPage === 0) {
+						leftButton.style.display = 'none';
+						rightButton.style.display = 'block';
+					} else if (currentPage === totalPages - 1) {
+						leftButton.style.display = 'block';
+						rightButton.style.display = 'none';
+					} else {
+						leftButton.style.display = 'block';
+						rightButton.style.display = 'block';
+					}
+				}
+			}
+			
+			function pauseAllVideos() {
+				videos.forEach(video => {
+					video.pause();
+				});
+			}
+			
+			// 翻页函数
+			function goToPage(pageIndex) {
+				if (pageIndex < 0 || pageIndex >= totalPages) return;
+				currentPage = pageIndex;
+				pauseAllVideos();
+				swiperContainer.swiper.slideTo(currentPage, 500); // 500ms的过渡时间
+				updatePageButtons();
+			}
+			
+			// 为翻页按钮添加点击事件
+			leftButton.addEventListener('click', () => goToPage(currentPage - 1));
+			rightButton.addEventListener('click', () => goToPage(currentPage + 1));
+			
+			// 监听Swiper页面切换事件，更新当前页码和按钮状态
+			swiperContainer.addEventListener('swipertransitionstart', function() {
+				pauseAllVideos();
+			});
+			
+			// 监听slidechange事件更新当前页码
+			swiperContainer.addEventListener('swiperslidechange', function(e) {
+				const swiperInstance = e.detail && e.detail[0] ? e.detail[0] : swiperContainer.swiper;
+				if (swiperInstance && swiperInstance.activeIndex !== undefined) {
+					currentPage = swiperInstance.activeIndex;
+					updatePageButtons();
+				}
+				pauseAllVideos();
+			});
+			
+			// 初始化按钮状态
+			updatePageButtons();
+			
+			// 为每个视频和播放按钮建立关联
+			videos.forEach((video, index) => {
+				// 获取对应的播放按钮
+				const playButton = document.querySelector(`.play-button[data-video-index="${index}"]`);
+				
+				if (playButton) {
+					// 点击播放按钮时播放视频并隐藏按钮
+					playButton.addEventListener('click', function() {
+						video.play();
+					});
+					
+					// 监听视频播放事件，隐藏播放按钮
+					video.addEventListener('play', function() {
+						const button = document.querySelector(`.play-button[data-video-index="${index}"]`);
+						if (button) {
+							button.style.display = 'none';
+						}
+					});
+					
+					// 视频暂停时显示播放按钮
+					video.addEventListener('pause', function() {
+						const button = document.querySelector(`.play-button[data-video-index="${index}"]`);
+						if (button) {
+							button.style.display = 'block';
+						}
+					});
+					
+					// 视频结束时显示播放按钮
+					video.addEventListener('ended', function() {
+						const button = document.querySelector(`.play-button[data-video-index="${index}"]`);
+						if (button) {
+							button.style.display = 'block';
+						}
+					});
+				}
+			});
+			
+		});
+	</script>
 </body>
 
 </html>
