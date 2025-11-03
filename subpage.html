@@ -326,36 +326,36 @@
 				contentWrapper.empty();
 				pageData.forEach((page) => {
 					const svgContainer = $('<div class="svg-container"></div>');
-					
+
 					// 创建内容内部包装器
 					const contentInnerWrapper = $('<div class="content-inner-wrapper"></div>');
-					
+
 					// 添加标题元素
 					if (page.title) {
 						const titleElement = $('<div class="page-title"></div>');
 						titleElement.html(page.title);
 						contentInnerWrapper.append(titleElement);
 					}
-					
+
 					// 添加副标题元素
 					if (page.subtitle) {
 						const subtitleElement = $('<div class="page-subtitle"></div>');
 						subtitleElement.html(page.subtitle);
 						contentInnerWrapper.append(subtitleElement);
 					}
-					
+
 					// 创建SVG包装器
-          const mediaWrapper = $('<div class="media-wrapper"></div>');
-          const mediaElement = createMediaElement(page.URL);
-          mediaWrapper.append(mediaElement);
-          contentInnerWrapper.append(mediaWrapper);
-					
+					const mediaWrapper = $('<div class="media-wrapper"></div>');
+					const mediaElement = createMediaElement(page.URL);
+					mediaWrapper.append(mediaElement);
+					contentInnerWrapper.append(mediaWrapper);
+
 					// 将内容内部包装器添加到容器中
 					svgContainer.append(contentInnerWrapper);
 					contentWrapper.append(svgContainer);
 				});
 				updateContentPosition();
-        handleMediaPlayback();
+				handleMediaPlayback();
 			}
 
 			function renderPageIndicator() {
@@ -420,7 +420,7 @@
 			function updateContentPosition() {
 				const containerWidth = $('.content-container').width();
 				$('#contentWrapper').css('transform', `translateX(${-currentPage * containerWidth}px)`);
-        handleMediaPlayback();
+				handleMediaPlayback();
 			}
 
 			function updatePageIndicator() {
@@ -447,64 +447,64 @@
 						rightBtn.fadeIn(200);
 					}
 				}
-		}
+			}
 
-      function createMediaElement(url = '') {
-		const safeUrl = url || '';
-		const urlWithoutQuery = safeUrl.split('?')[0];
-		const urlSegments = urlWithoutQuery.split('.');
-		const extension = urlSegments.length > 1 ? urlSegments.pop().toLowerCase() : '';
-        const imageTypes = ['png', 'jpg', 'jpeg', 'gif', 'bmp', 'webp', 'avif'];
-        const videoTypes = ['mp4', 'webm', 'ogg', 'mov'];
+			function createMediaElement(url = '') {
+				const safeUrl = url || '';
+				const urlWithoutQuery = safeUrl.split('?')[0];
+				const urlSegments = urlWithoutQuery.split('.');
+				const extension = urlSegments.length > 1 ? urlSegments.pop().toLowerCase() : '';
+				const imageTypes = ['png', 'jpg', 'jpeg', 'gif', 'bmp', 'webp', 'avif'];
+				const videoTypes = ['mp4', 'webm', 'ogg', 'mov'];
 
-        if (extension === 'svg') {
-          const objectElement = $('<object class="media-content media-content-object" type="image/svg+xml"></object>');
-          objectElement.attr('data', safeUrl);
-          return objectElement;
-        }
+				if (extension === 'svg') {
+					const objectElement = $('<object class="media-content media-content-object" type="image/svg+xml"></object>');
+					objectElement.attr('data', safeUrl);
+					return objectElement;
+				}
 
-        if (imageTypes.includes(extension)) {
-          const imageElement = $('<img class="media-content" alt="" draggable="false" />');
-          imageElement.attr('src', safeUrl);
-          return imageElement;
-        }
+				if (imageTypes.includes(extension)) {
+					const imageElement = $('<img class="media-content" alt="" draggable="false" />');
+					imageElement.attr('src', safeUrl);
+					return imageElement;
+				}
 
-        if (videoTypes.includes(extension)) {
-          const videoElement = $('<video class="media-content media-content-video" muted playsinline loop></video>');
-          videoElement.attr('src', safeUrl);
-          videoElement.attr('autoplay', 'autoplay');
-          return videoElement;
-        }
+				if (videoTypes.includes(extension)) {
+					const videoElement = $('<video class="media-content media-content-video" muted playsinline loop></video>');
+					videoElement.attr('src', safeUrl);
+					videoElement.attr('autoplay', 'autoplay');
+					return videoElement;
+				}
 
-        const fallbackElement = $('<div class="media-fallback"></div>');
-        fallbackElement.text('暂不支持的媒体格式');
-        return fallbackElement;
-      }
+				const fallbackElement = $('<div class="media-fallback"></div>');
+				fallbackElement.text('暂不支持的媒体格式');
+				return fallbackElement;
+			}
 
-      function handleMediaPlayback() {
-        $('.svg-container').each(function (index) {
-          const isActive = index === currentPage;
-          $(this).find('.media-content-video').each(function () {
-            const video = this;
-            if (isActive) {
-              const playMethod = video.play;
-              if (typeof playMethod === 'function') {
-                const playPromise = playMethod.call(video);
-                if (playPromise && typeof playPromise.then === 'function') {
-                  playPromise.catch(function () { });
-                }
-              }
-            } else {
-              const pauseMethod = video.pause;
-              if (typeof pauseMethod === 'function') {
-                pauseMethod.call(video);
-              }
-              video.currentTime = 0;
-            }
-          });
-        });
-      }
-	});
+			function handleMediaPlayback() {
+				$('.svg-container').each(function (index) {
+					const isActive = index === currentPage;
+					$(this).find('.media-content-video').each(function () {
+						const video = this;
+						if (isActive) {
+							const playMethod = video.play;
+							if (typeof playMethod === 'function') {
+								const playPromise = playMethod.call(video);
+								if (playPromise && typeof playPromise.then === 'function') {
+									playPromise.catch(function () { });
+								}
+							}
+						} else {
+							const pauseMethod = video.pause;
+							if (typeof pauseMethod === 'function') {
+								pauseMethod.call(video);
+							}
+							video.currentTime = 0;
+						}
+					});
+				});
+			}
+		});
 
 		// 获取返回URL的函数
 		function getReturnUrl() {
