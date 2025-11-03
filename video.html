@@ -101,18 +101,28 @@
                 object-fit: contain; 
             }
 
-            .nav-button.logo {
+            .nav-button {
                 position: absolute;
+                z-index: 20;
+                cursor: pointer;
+                opacity: 0.8;
+                transition: opacity 0.3s;
+            }
+            .nav-button:hover {
+                opacity: 1;
+            }
+            .nav-button.logo {
                 right: 50px;
                 top: 50px;
                 width: clamp(128px, 16vw, 512px);
                 height: auto;
-                z-index: 20;
-                opacity: 0.8;
-                transition: opacity 0.3s;
             }
-            .nav-button.logo:hover {
-                opacity: 1;
+            .back-button {
+                right: 50px;
+                bottom: 50px;
+                width: clamp(64px, 8vw, 256px);
+                height: clamp(64px, 8vw, 256px);
+                top: auto;
             }
 
             /* 中心视频样式 */
@@ -177,6 +187,11 @@
 	<div class="home-container" style="background-image: url('./img/bg/big.jpg')">
 		<div class="nav-button logo">
 			<img src="./img/logo.svg" alt="Logo" class="w-full h-full object-contain">
+		</div>
+
+		<!-- 返回按钮 -->
+		<div class="nav-button back-button" onclick="window.location.href='./index.html'">
+			<img src="./img/back.svg" alt="返回首页" class="w-full h-full object-contain">
 		</div>
 
 		<!-- 左翻页按钮 -->
