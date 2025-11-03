@@ -207,7 +207,7 @@
       .indicator-dot.active {
         background-color: white;
       }
-      
+
       /* 响应式媒体查询 */
       @media (max-width: 768px) {
         .content-inner-wrapper {
@@ -356,6 +356,47 @@
 				});
 				updateContentPosition();
 				handleMediaPlayback();
+
+				// 为特定页面添加点击事件
+				addClickHandlerForSpecialPage();
+			}
+
+			// 为特定页面添加点击处理函数
+			function addClickHandlerForSpecialPage() {
+				// 检查是否为特定页面（MR-ART宫颈癌放疗新范式 第一页）
+				if (pageType === 'MR-ART宫颈癌放疗新范式' && currentPage === 0) {
+					console.log('检测到特定页面，添加点击事件');
+
+					// 获取当前显示的svg容器
+					const currentContainer = $('.svg-container').eq(currentPage);
+
+					// 为该容器内的图片添加点击事件（仅限 img，避免影响视频/对象）
+					const images = currentContainer.find('img.media-content');
+					console.log('找到', images.length, '张图片');
+
+					images.each(function(index) {
+						const img = $(this);
+
+						// 启用鼠标事件（覆盖 pointer-events: none）
+						img.css('pointer-events', 'auto');
+
+						// 添加鼠标样式
+						img.css('cursor', 'pointer');
+
+						// 移除已存在的事件处理器
+						img.off('click.special');
+
+						// 添加新的点击事件处理器（直接替换图片 src）
+						img.on('click.special', function(e) {
+							console.log('图片被点击，直接替换为指定图片');
+							e.preventDefault();
+							e.stopPropagation();
+							img.attr('src', './data/智慧影像赋能/5.1/20251030-互动屏-Ethos-内容_21.png');
+							// 替换后移除本次点击绑定，避免重复处理
+							img.off('click.special');
+						});
+					});
+				}
 			}
 
 			function renderPageIndicator() {
@@ -415,6 +456,9 @@
 				updateContentPosition();
 				updatePageIndicator();
 				updatePageButtons(); // 翻页后更新按钮状态
+
+				// 切换页面后重新检查并添加点击事件
+				addClickHandlerForSpecialPage();
 			}
 
 			function updateContentPosition() {
@@ -504,6 +548,7 @@
 					});
 				});
 			}
+
 		});
 
 		// 获取返回URL的函数
