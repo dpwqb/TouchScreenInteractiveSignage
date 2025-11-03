@@ -21,7 +21,7 @@
   },
   "build": {
     "appId": "com.SiemensHealthineers.ethos-interactive-screen",
-    "productName": "软件名",
+    "productName": "互动屏-Ethos",
     "directories": {
       "output": "dist"
     },
