@@ -208,6 +208,32 @@
         background-color: white;
       }
 
+      /* 滚动文字样式（优化滚动区域和文字密度） */
+      .scrolling-text-container {
+        position: absolute;
+        left: 15vw;
+        top: 51%;
+        transform: translateY(-50%);
+        width: clamp(150px, 15vw, 250px);
+        height: 22.5vh;
+        overflow: hidden;
+        padding: 10px 0;
+        box-sizing: border-box;
+      }
+      .scrolling-text-wrapper {
+        position: relative;
+        width: 100%;
+        transition: top 0.1s linear;
+      }
+      .scrolling-text {
+        font-family: 'SHBreeHeadlineGlobal', sans-serif;
+        font-size: clamp(1rem, 2vw, 4rem);
+        color: white;
+        line-height: 2.9;
+        text-align: center;
+        margin: 0;
+      }
+      
       /* 响应式媒体查询 */
       @media (max-width: 768px) {
         .content-inner-wrapper {
@@ -324,7 +350,7 @@
 			function renderPageContent() {
 				const contentWrapper = $('#contentWrapper');
 				contentWrapper.empty();
-				pageData.forEach((page) => {
+				pageData.forEach((page,index) => {
 					const svgContainer = $('<div class="svg-container"></div>');
 
 					// 创建内容内部包装器
@@ -344,6 +370,81 @@
 						contentInnerWrapper.append(subtitleElement);
 					}
 
+					// 滚动逻辑
+					if (pageType === "临床应用汇总" && index === 0) {
+						const scrollContainer = $('<div class="scrolling-text-container"></div>');
+						const scrollWrapper = $('<div class="scrolling-text-wrapper"></div>');
+
+						// 完整文字内容）
+						const bodyParts = `
+                            <div class="scrolling-text">
+                                面部<br>
+                                眼眶<br>
+                                脊柱-腰椎<br>
+                                其他胸腔部位<br>
+                                颅骨<br>
+                                锁骨上窝<br>
+                                脊柱-颈椎<br>
+                                腿部<br>
+                                大腿<br>
+                                锁骨<br>
+                                胆囊<br>
+                                足<br>
+                                肛门<br>
+                                腋窝<br>
+                                肝<br>
+                                胸壁<br>
+                                脾<br>
+                                脊柱-骶骨<br>
+                                食管<br>
+                                肋骨<br>
+                                唾液腺<br>
+                                鼻窦<br>
+                                食管下段<br>
+                                其他身体部位<br>
+                                鼻咽<br>
+                                口咽<br>
+                                肾上腺<br>
+                                纵隔<br>
+                                胰腺<br>
+                                口腔<br>
+                                脑部<br>
+                                阴道<br>
+                                主动脉旁<br>
+                                脊柱-胸椎<br>
+                                骨盆<br>
+                                胃<br>
+                                前列腺<br>
+                                膀胱<br>
+                                其他腹部部位<br>
+                                直肠<br>
+                                宫颈<br>
+                                其他骨盆部位<br>
+                                肺部<br>
+                                外阴<br>
+                                喉部<br>
+                                子宫<br>
+                                乳腺<br>
+                                其他头颈部部位<br>
+                                腹膜后间隙<br>
+                                脊柱-腰椎<br>
+                                其他胸腔部位<br>
+                                颅骨<br>
+                                锁骨上窝<br>
+                                脊柱-颈椎<br>
+                            </div>
+                        `;
+
+						scrollWrapper.html(bodyParts);
+						scrollWrapper.append($(bodyParts).clone());
+						scrollContainer.append(scrollWrapper);
+						svgContainer.append(scrollContainer);
+
+						// 启动滚动动画
+						setTimeout(() => {
+							animateScroll(scrollWrapper);
+						}, 100); // 延迟启动，确保DOM渲染完成
+					}
 					// 创建SVG包装器
 					const mediaWrapper = $('<div class="media-wrapper"></div>');
 					const mediaElement = createMediaElement(page.URL);
@@ -374,7 +475,7 @@
 					const images = currentContainer.find('img.media-content');
 					console.log('找到', images.length, '张图片');
 
-					images.each(function(index) {
+					images.each(function (index) {
 						const img = $(this);
 
 						// 启用鼠标事件（覆盖 pointer-events: none）
@@ -387,7 +488,7 @@
 						img.off('click.special');
 
 						// 添加新的点击事件处理器（直接替换图片 src）
-						img.on('click.special', function(e) {
+						img.on('click.special', function (e) {
 							console.log('图片被点击，直接替换为指定图片');
 							e.preventDefault();
 							e.stopPropagation();
@@ -547,21 +648,46 @@
 						}
 					});
 				});
-			}
+      }
 
-		});
+      // 无跳跃连续循环动画
+function animateScroll(wrapper) {
+  const speed = 25; 
+  let position = 0;
+  const singleContentHeight = wrapper.find('.scrolling-text').first().outerHeight();
+  const totalContentHeight = singleContentHeight * 2;
 
-		// 获取返回URL的函数
-		function getReturnUrl() {
-			const urlParams = new URLSearchParams(window.location.search);
-			const returnPage = urlParams.get('returnPage');
-			if (returnPage) {
-				window.location.href = `./index.html?page=${returnPage}`;
-			} else {
-				window.location.href = './index.html?page=0';
-			}
-		}
-	</script>
+  function scroll() {
+    position++;
+    if (position >= singleContentHeight) {
+
+      position = 0;
+      wrapper.css('transition', 'none').css('top', `-${position}px`);
+      requestAnimationFrame(() => {
+        wrapper.css('transition', 'top 0.1s linear');
+      });
+    } else {
+      // 正常滚动
+      wrapper.css('top', `-${position}px`);
+    }
+    requestAnimationFrame(scroll);
+  }
+  
+  scroll();
+}
+        });
+
+                // 获取返回URL的函数
+                function getReturnUrl() {
+                        const urlParams = new URLSearchParams(window.location.search);
+                        const returnPage = urlParams.get('returnPage');
+                        if (returnPage) {
+                                window.location.href = `./index.html?page=${returnPage}`;
+                        } else {
+                                window.location.href = './index.html?page=0';
+                        }
+                }
+        </script>
 
 </body>
 
