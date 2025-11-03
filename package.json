@@ -1,7 +1,7 @@
 {
-  "name": "obj-name",
-  "version": "0.0.1",
-  "description": "描述",
+  "name": "ethos-interactive-screen",
+  "version": "1.0.0",
+  "description": "Ethos互动屏",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -11,8 +11,8 @@
     "build:arm64": "electron-builder --win --arm64",
     "build:all": "electron-builder --win --x64 --ia32 --arm64"
   },
-  "author": "作者名",
-  "license": "协议",
+  "author": "SiemensHealthineers",
+  "license": "NULL",
   "devDependencies": {
     "electron": "^38.3.0",
     "electron-builder": "^26.0.12"
@@ -20,7 +20,7 @@
   "dependencies": {
   },
   "build": {
-    "appId": "com.公司名.软件名",
+    "appId": "com.SiemensHealthineers.ethos-interactive-screen",
     "productName": "软件名",
     "directories": {
       "output": "dist"
