@@ -58,7 +58,7 @@
             /* 首页标题样式 */
             .home-title {
                 font-family: 'SHBreeHeadlineGlobal', sans-serif;
-                font-size: clamp(3rem, 7vw, 8rem);
+                font-size: clamp(3rem, 6vw, 8rem);
                 font-weight: bold;
                 color: #EC6600;
                 /* 标题居中显示 */
@@ -67,7 +67,7 @@
                 left: 50%;
                 transform: translateX(-50%);
                 text-align: center;
-                max-width: 80%; /* 限制宽度，避免文字溢出 */
+				width: 1300px;
             }
             /* 右侧按钮容器：垂直居中排列 */
             .button-container {
@@ -105,8 +105,8 @@
                 position: absolute;
                 z-index: 20;
                 cursor: pointer;
-                opacity: 0.8;
-                transition: opacity 0.3s;
+                opacity: 0.9;
+                transition: opacity 0.1s;
             }
             .nav-button:hover {
                 opacity: 1;
@@ -222,12 +222,15 @@
 			<!-- 第一页 -->
 			<swiper-slide>
 				<!-- 首页标题 -->
-				<div class="home-title">智能流程</div>
+				<div class="home-title">
+					RapidArc Dynamic<br/>
+					“术”中双旋调强放疗技术
+				</div>
 
 				<!-- 视频 -->
 				<div class="center-video">
-					<video controls class="product-video">
-						<source src="./data/智能流程/智能流程.mp4" type="video/mp4">
+					<video controls class="product-video" muted playsinline>
+						<source src="./data/见证科技力量/RapidArc Dynamic 术中双旋调强放疗技术.mp4" type="video/mp4">
 						浏览器不支持视频播放。
 					</video>
 					<!-- 播放按钮 -->
@@ -238,16 +241,57 @@
 			<!-- 第二页 -->
 			<swiper-slide>
 				<!-- 首页标题 -->
-				<div class="home-title">智能流程</div>
+				<div class="home-title">
+					HyperArc<br/>
+					头部放射外科治疗系统
+				</div>
 
 				<!-- 视频 -->
 				<div class="center-video">
-					<video controls class="product-video">
-						<source src="./data/智能流程/智能流程.mp4" type="video/mp4">
+					<video controls class="product-video" muted playsinline>
+						<source src="./data/见证科技力量/HyperArc 头部放射外科治疗系统.mp4" type="video/mp4">
 						浏览器不支持视频播放。
 					</video>
 					<!-- 播放按钮 -->
 					<img src="./img/play.svg" alt="播放" class="play-button" data-video-index="1">
+				</div>
+			</swiper-slide>
+
+			<!-- 第三页 -->
+			<swiper-slide>
+				<!-- 首页标题 -->
+				<div class="home-title">
+					RapidArc Dynamic<br/>
+					“术”中双旋调强放疗技术
+				</div>
+
+				<!-- 视频 -->
+				<div class="center-video">
+					<video controls class="product-video" muted playsinline>
+						<source src="./data/见证科技力量/RapidArc Dynamic 术中双旋调强放疗技术2.mp4" type="video/mp4">
+						浏览器不支持视频播放。
+					</video>
+					<!-- 播放按钮 -->
+					<img src="./img/play.svg" alt="播放" class="play-button" data-video-index="2">
+				</div>
+			</swiper-slide>
+
+			<!-- 第四页 -->
+			<swiper-slide>
+				<!-- 首页标题 -->
+				<div class="home-title">
+					TrueBeam<br/>
+					立体定向放射治疗旗舰平台
+				</div>
+
+				<!-- 视频 -->
+				<div class="center-video">
+					<video controls class="product-video" muted playsinline>
+						<source src="./data/见证科技力量/TrueBeam 立体定向放射治疗旗舰平台.mp4" type="video/mp4">
+						浏览器不支持视频播放。
+					</video>
+					<!-- 播放按钮 -->
+					<img src="./img/play.svg" alt="播放" class="play-button" data-video-index="3">
 				</div>
 			</swiper-slide>
 
@@ -301,6 +345,32 @@
 				videos.forEach(video => {
 					video.pause();
 				});
+				// 显示所有播放按钮
+				playButtons.forEach(button => {
+					button.style.display = 'block';
+				});
+			}
+
+			// 播放当前页面的视频
+			function playVideoOnCurrentPage() {
+				const currentSlide = swiperContainer.swiper.slides[currentPage];
+				if (currentSlide) {
+					const currentVideo = currentSlide.querySelector('.product-video');
+					if (currentVideo) {
+						// 延迟播放，等待页面切换动画完成
+						setTimeout(() => {
+							currentVideo.play().then(() => {
+								// 播放成功后隐藏播放按钮
+								const button = currentSlide.querySelector('.play-button');
+								if (button) {
+									button.style.display = 'none';
+								}
+							}).catch(error => {
+								console.log('自动播放失败，可能需要用户交互:', error);
+							});
+						}, 600); // 600ms延迟，确保切换动画完成
+					}
+				}
 			}
 			
 			// 翻页函数
@@ -310,6 +380,8 @@
 				pauseAllVideos();
 				swiperContainer.swiper.slideTo(currentPage, 500); // 500ms的过渡时间
 				updatePageButtons();
+				// 自动播放当前页面的视频
+				playVideoOnCurrentPage();
 			}
 			
 			// 为翻页按钮添加点击事件
@@ -329,10 +401,17 @@
 					updatePageButtons();
 				}
 				pauseAllVideos();
+				// 自动播放当前页面的视频
+				playVideoOnCurrentPage();
 			});
 			
 			// 初始化按钮状态
 			updatePageButtons();
+
+			// 页面加载完成后自动播放第一个视频
+			setTimeout(() => {
+				playVideoOnCurrentPage();
+			}, 1000); // 延迟1秒，确保页面完全加载
 			
 			// 为每个视频和播放按钮建立关联
 			videos.forEach((video, index) => {

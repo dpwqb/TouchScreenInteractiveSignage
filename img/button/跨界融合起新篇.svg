@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="_图层_2" data-name="图层 2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 116 116">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #ec6600;
+        stroke-width: 0px;
+      }
+
+      .cls-2 {
+        filter: url(#outer-glow-1);
+        stroke: #ec6600;
+        stroke-miterlimit: 10;
+      }
+    </style>
+    <filter id="outer-glow-1" filterUnits="userSpaceOnUse">
+      <feOffset dx="0" dy="0"/>
+      <feGaussianBlur result="blur" stdDeviation="7"/>
+      <feFlood flood-color="#ff6700" flood-opacity=".75"/>
+      <feComposite in2="blur" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="_图层_1-2" data-name="图层 1">
+    <g>
+      <circle class="cls-2" cx="58.29" cy="57.9" r="36"/>
+      <g>
+        <path class="cls-1" d="m62.21,63.83c-1.18,0-2.37-.45-3.27-1.35l-2.61-2.62,1.31-1.31,2.61,2.62c1.08,1.08,2.84,1.08,3.92,0l9.81-9.81c.52-.52.81-1.22.81-1.96s-.29-1.44-.81-1.96l-5.23-5.23c-1.08-1.08-2.84-1.08-3.92,0l-8.5,8.5-1.31-1.31,8.5-8.5c1.8-1.8,4.73-1.8,6.54,0l5.23,5.23c.87.87,1.35,2.03,1.35,3.27s-.48,2.4-1.35,3.27l-9.81,9.81c-.9.9-2.08,1.35-3.27,1.35Z"/>
+        <path class="cls-1" d="m49.79,76.25c-1.18,0-2.37-.45-3.27-1.35l-5.23-5.23c-.87-.87-1.35-2.03-1.35-3.27s.48-2.4,1.35-3.27l9.81-9.81c1.8-1.8,4.74-1.8,6.54,0l2.61,2.61-1.31,1.31-2.61-2.61c-1.08-1.08-2.84-1.08-3.92,0l-9.81,9.81c-.52.52-.81,1.22-.81,1.96s.29,1.44.81,1.96l5.23,5.23c1.08,1.08,2.84,1.08,3.92,0l8.5-8.5,1.31,1.31-8.5,8.5c-.9.9-2.08,1.35-3.27,1.35Z"/>
+      </g>
+    </g>
+  </g>
+</svg>
