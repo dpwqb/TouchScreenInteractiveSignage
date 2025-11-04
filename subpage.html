@@ -63,9 +63,9 @@
       .back-button {
         right:50px;
         bottom: 50px;
-		width: clamp(64px, 8vw, 256px);
-        height: clamp(64px, 8vw, 256px);
-        top: auto;
+		width: clamp(64px, 20vw, 256px);
+        height: clamp(64px, 20vw, 256px);
+        top: 85%;
       }
       .page-button {
         position: absolute;
@@ -687,7 +687,8 @@
 			const urlParams = new URLSearchParams(window.location.search);
 			const from = urlParams.get('from');
 			// 如果有来源参数，直接拼接到返回路径；否则返回首页
-			window.location.href = `./${from?from:'index'}.html`;
+			// window.location.href = `./${from?from:'index'}.html`;
+			window.location.href = `./index.html`;
 		}
 	</script>
 
