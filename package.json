@@ -1,6 +1,6 @@
 {
   "name": "ethos-interactive-screen",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Ethos互动屏",
   "main": "main.js",
   "scripts": {
