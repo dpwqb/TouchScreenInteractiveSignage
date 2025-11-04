@@ -182,6 +182,11 @@
 		.media-content.media-content-video {
 			height: 100%;
 		}
+
+		/* 为肺癌放射外科页面的特殊视频启用点击事件 */
+		#lungVideo1, #lungVideo2 {
+			pointer-events: auto !important;
+		}
 		.media-fallback {
 			width: 100%;
 			color: white;
@@ -324,6 +329,43 @@
 			justify-content: center;
 			align-items: center;
 		}
+
+		/* 视频控制按钮样式 */
+		.video-controls {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			z-index: 16;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.video-play-btn {
+			width: clamp(60px, 8vw, 120px);
+			height: clamp(60px, 8vw, 120px);
+			cursor: pointer;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			background: rgba(0, 0, 0, 0.6);
+			border-radius: 50%;
+			transition: all 0.3s ease;
+			pointer-events: auto;
+			opacity: 0.9;
+		}
+
+		.video-play-btn:hover {
+			opacity: 1;
+			background: rgba(0, 0, 0, 0.8);
+		}
+
+		.video-play-btn img {
+			width: 60%;
+			height: 60%;
+			object-fit: contain;
+		}
 		/* 特殊图片样式 - 肺癌脑转移放射外科第1页（不同部分） */
 		.special-image-wrapper-2-18 {
 			top: 33%;
@@ -453,6 +495,7 @@
 						renderPageIndicator();
 						bindEvents();
 						updatePageButtons(); // 初始化时更新按钮显示状态
+						initVideoControls(); // 初始化视频控制功能
 					} else {
 						// 如果页面类型不存在，弹出提示并返回到首页
 						alert('访问的页面不存在！');
@@ -543,16 +586,32 @@
 
 						// 右侧第一个视频
 						const videoWrapper1 = $('<div class="special-video-wrapper special-video-wrapper-1-16"></div>');
-						const video1 = $('<video class="media-content media-content-video special-video" muted playsinline loop autoplay></video>');
+						const video1 = $('<video id="lungVideo1" class="media-content media-content-video special-video" muted playsinline loop autoplay></video>');
 						video1.attr('src', './data/卓越临床获益/肺癌放射外科/Edge开创高效无创安全 根治早期肺癌新境界2.mp4');
+
+						// 第一个视频的播放控制按钮
+						const videoControls1 = $('<div class="video-controls"></div>');
+						const playBtn1 = $('<div class="video-play-btn" id="lungVideoPlayBtn1"></div>');
+						playBtn1.html('<img src="./img/play.svg" alt="播放" style="width: 100%; height: 100%; object-fit: contain;">');
+						videoControls1.append(playBtn1);
+
 						videoWrapper1.append(video1);
+						videoWrapper1.append(videoControls1);
 						svgContainer.append(videoWrapper1);
 
 						// 右侧第二个视频
 						const videoWrapper2 = $('<div class="special-video-wrapper special-video-wrapper-1-17"></div>');
-						const video2 = $('<video class="media-content media-content-video special-video" muted playsinline loop autoplay></video>');
+						const video2 = $('<video id="lungVideo2" class="media-content media-content-video special-video" muted playsinline loop autoplay></video>');
 						video2.attr('src', './data/卓越临床获益/肺癌放射外科/Edge开创高效无创安全 根治早期肺癌新境界.mp4');
+
+						// 第二个视频的播放控制按钮
+						const videoControls2 = $('<div class="video-controls"></div>');
+						const playBtn2 = $('<div class="video-play-btn" id="lungVideoPlayBtn2"></div>');
+						playBtn2.html('<img src="./img/play.svg" alt="播放" style="width: 100%; height: 100%; object-fit: contain;">');
+						videoControls2.append(playBtn2);
+
 						videoWrapper2.append(video2);
+						videoWrapper2.append(videoControls2);
 						svgContainer.append(videoWrapper2);
 					}
 
@@ -760,44 +819,103 @@
 					const isActive = index === currentPage;
 					$(this).find('.media-content-video').each(function () {
 						const video = this;
-						const videoWrapper = $(video).closest('.special-video-wrapper');
-						const playButton = videoWrapper.find('.special-video-play-button');
-
 						if (isActive) {
-							// 特殊视频不自动播放，保持用户控制
-							if (!videoWrapper.length || !video.hasAttribute('controls')) {
-								const playMethod = video.play;
-								if (typeof playMethod === 'function') {
-									const playPromise = playMethod.call(video);
-									if (typeof playPromise === 'object' && typeof playPromise.then === 'function') {
-										playPromise.catch(function () { });
-									}
-								}
-							} else {
-								// 特殊视频：根据播放状态更新播放按钮
-								if (playButton.length) {
-									if (video.paused) {
-										playButton.css('display', 'block');
-									} else {
-										playButton.css('display', 'none');
-									}
+							const playMethod = video.play;
+							if (typeof playMethod === 'function') {
+								const playPromise = playMethod.call(video);
+								if (typeof playPromise === 'object' && typeof playPromise.then === 'function') {
+									playPromise.catch(function () { });
 								}
 							}
 						} else {
+							// 非当前页面视频暂停
 							const pauseMethod = video.pause;
 							if (typeof pauseMethod === 'function') {
 								pauseMethod.call(video);
 							}
 							video.currentTime = 0;
-							// 非当前页面的特殊视频显示播放按钮
-							if (playButton.length) {
-								playButton.css('display', 'block');
-							}
 						}
 					});
 				});
 			}
 		});
+
+			// 初始化视频控制功能
+			function initVideoControls() {
+				// 第一个视频控制
+				const video1 = document.getElementById('lungVideo1');
+				const playBtn1 = document.getElementById('lungVideoPlayBtn1');
+
+				if (video1 && playBtn1) {
+					// 点击播放按钮播放视频
+					playBtn1.addEventListener('click', function(e) {
+						e.stopPropagation(); // 阻止事件冒泡到视频点击事件
+						video1.play();
+					});
+
+					// 点击视频本身播放/暂停
+					video1.addEventListener('click', function() {
+						if (video1.paused) {
+							video1.play();
+						} else {
+							video1.pause();
+						}
+					});
+
+					// 视频播放时隐藏播放按钮
+					video1.addEventListener('play', function() {
+						playBtn1.style.display = 'none';
+					});
+
+					// 视频暂停时显示播放按钮
+					video1.addEventListener('pause', function() {
+						playBtn1.style.display = 'flex';
+					});
+
+					// 视频结束时自动重新播放（由于有loop属性，这主要是为了确保状态一致）
+					video1.addEventListener('ended', function() {
+						// 视频会自动循环播放，确保播放按钮保持隐藏状态
+						playBtn1.style.display = 'none';
+					});
+				}
+
+				// 第二个视频控制
+				const video2 = document.getElementById('lungVideo2');
+				const playBtn2 = document.getElementById('lungVideoPlayBtn2');
+
+				if (video2 && playBtn2) {
+					// 点击播放按钮播放视频
+					playBtn2.addEventListener('click', function(e) {
+						e.stopPropagation(); // 阻止事件冒泡到视频点击事件
+						video2.play();
+					});
+
+					// 点击视频本身播放/暂停
+					video2.addEventListener('click', function() {
+						if (video2.paused) {
+							video2.play();
+						} else {
+							video2.pause();
+						}
+					});
+
+					// 视频播放时隐藏播放按钮
+					video2.addEventListener('play', function() {
+						playBtn2.style.display = 'none';
+					});
+
+					// 视频暂停时显示播放按钮
+					video2.addEventListener('pause', function() {
+						playBtn2.style.display = 'flex';
+					});
+
+					// 视频结束时自动重新播放（由于有loop属性，这主要是为了确保状态一致）
+					video2.addEventListener('ended', function() {
+						// 视频会自动循环播放，确保播放按钮保持隐藏状态
+						playBtn2.style.display = 'none';
+					});
+				}
+			}
 
 		// GIF翻页控制功能
 		let currentGifIndex = 0;
