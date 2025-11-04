@@ -590,37 +590,37 @@
 
 			// 绑定特殊视频播放按钮事件
 			function bindSpecialVideoPlayButtons() {
-				$('.special-video-play-button').each(function() {
+				$('.special-video-play-button').each(function () {
 					const playButton = $(this);
 					const videoId = playButton.attr('data-video-id');
 					const videoWrapper = playButton.closest('.special-video-wrapper');
 					const video = videoWrapper.find('video.special-video')[0];
-					
+
 					if (video) {
 						// 点击播放按钮时播放视频
-						playButton.on('click', function(e) {
+						playButton.on('click', function (e) {
 							e.preventDefault();
 							e.stopPropagation(); // 阻止事件冒泡，避免影响翻页
-							video.play().catch(function(error) {
+							video.play().catch(function (error) {
 								console.log('播放失败:', error);
 							});
 						});
-						
+
 						// 监听视频播放事件，隐藏播放按钮
-						$(video).on('play', function() {
+						$(video).on('play', function () {
 							playButton.css('display', 'none');
 						});
-						
+
 						// 视频暂停时显示播放按钮
-						$(video).on('pause', function() {
+						$(video).on('pause', function () {
 							playButton.css('display', 'block');
 						});
-						
+
 						// 视频结束时显示播放按钮
-						$(video).on('ended', function() {
+						$(video).on('ended', function () {
 							playButton.css('display', 'block');
 						});
-						
+
 						// 初始化时，如果视频未播放，显示播放按钮
 						if (video.paused) {
 							playButton.css('display', 'block');
@@ -764,7 +764,7 @@
 						const video = this;
 						const videoWrapper = $(video).closest('.special-video-wrapper');
 						const playButton = videoWrapper.find('.special-video-play-button');
-						
+
 						if (isActive) {
 							// 特殊视频不自动播放，保持用户控制
 							if (!videoWrapper.length || !video.hasAttribute('controls')) {
@@ -799,6 +799,7 @@
 					});
 				});
 			}
+		});
 
 		// GIF翻页控制功能
 		let currentGifIndex = 0;
@@ -831,18 +832,18 @@
 		}
 
 		// 绑定GIF翻页按钮事件
-		$(document).on('click', '#gifLeftBtn', function(e) {
+		$(document).on('click', '#gifLeftBtn', function (e) {
 			e.stopPropagation();
 			prevGif();
 		});
 
-		$(document).on('click', '#gifRightBtn', function(e) {
+		$(document).on('click', '#gifRightBtn', function (e) {
 			e.stopPropagation();
 			nextGif();
 		});
 
 		// 添加键盘控制支持
-		$(document).on('keydown', function(e) {
+		$(document).on('keydown', function (e) {
 			// 只在肺癌放射外科第2页时启用GIF键盘控制
 			if (pageType === '肺癌放射外科' && currentPage === 1) {
 				if (e.key === 'ArrowLeft') {
@@ -863,7 +864,7 @@
 
 		// 在renderPageContent函数中调用
 		const originalRenderPageContent = renderPageContent;
-		renderPageContent = function() {
+		renderPageContent = function () {
 			originalRenderPageContent.call(this);
 			setTimeout(initGifDisplay, 100); // 延迟初始化确保DOM已渲染
 		};
@@ -872,15 +873,9 @@
 		function getReturnUrl() {
 			const urlParams = new URLSearchParams(window.location.search);
 			const from = urlParams.get('from');
-			
 			// 如果有来源参数，直接拼接到返回路径；否则返回首页
-			if (from) {
-				window.location.href = `./${from}.html`;
-			} else {
-				window.location.href = './index.html';
-			}
+			window.location.href = `./${from ? from : 'index'}.html`;
 		}
-	});
 	</script>
 
 </body>
