@@ -233,7 +233,26 @@
         text-align: center;
         margin: 0;
       }
-      
+		/* 特殊视频样式 - 基础样式（共用部分） */
+		.special-video-wrapper {
+			position: absolute;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			z-index: 15;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		.special-video {
+			width: 100%;
+			height: 100%;
+			object-fit: contain;
+		}
+		/* 特殊视频样式 - 探索创新方案第3页（不同部分） */
+		.special-video-wrapper-17 {
+			top: 71%;
+			width: 40svw;
+		}
       /* 响应式媒体查询 */
       @media (max-width: 768px) {
         .content-inner-wrapper {
@@ -510,6 +529,15 @@
 					mediaWrapper.append(mediaElement);
 					contentInnerWrapper.append(mediaWrapper);
 
+					// 为"Ethos治疗宫颈癌"第2页（索引1，page=2）添加特殊视频
+					if (pageType === 'Ethos治疗宫颈癌' && index === 1) {
+						const specialVideoWrapper = $('<div class="special-video-wrapper special-video-wrapper-17"></div>');
+						const specialVideo = $('<video class="media-content media-content-video special-video" muted playsinline loop autoplay></video>');
+						specialVideo.attr('src', './data/典型病例库/4.2/20251030-互动屏-Ethos-内容_17.mp4');
+						specialVideoWrapper.append(specialVideo);
+						svgContainer.append(specialVideoWrapper);
+					}
+
 					// 为"超清影像"第2页（索引1，page=2）添加4个视频展示
 					if (pageType === '超清影像' && index === 1) {
 						// 第一排第一个视频（头颈HyperSight）
@@ -760,7 +788,7 @@
 							const playMethod = video.play;
 							if (typeof playMethod === 'function') {
 								const playPromise = playMethod.call(video);
-								if (playPromise && typeof playPromise.then === 'function') {
+								if (typeof playPromise === 'object' && typeof playPromise.then === 'function') {
 									playPromise.catch(function () { });
 								}
 							}
