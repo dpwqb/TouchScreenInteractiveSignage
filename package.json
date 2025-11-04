@@ -1,7 +1,7 @@
 {
-  "name": "obj-name",
-  "version": "0.0.1",
-  "description": "描述",
+  "name": "edge-interactive-screen",
+  "version": "1.0.0",
+  "description": "Edge互动屏",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -11,7 +11,7 @@
     "build:arm64": "electron-builder --win --arm64",
     "build:all": "electron-builder --win --x64 --ia32 --arm64"
   },
-  "author": "作者名",
+  "author": "SiemensHealthineers",
   "license": "协议",
   "devDependencies": {
     "electron": "^38.3.0",
@@ -20,8 +20,8 @@
   "dependencies": {
   },
   "build": {
-    "appId": "com.公司名.软件名",
-    "productName": "软件名",
+    "appId": "com.SiemensHealthineers.ethos-interactive-screen",
+    "productName": "互动屏-Edge",
     "directories": {
       "output": "dist"
     },
