@@ -336,6 +336,24 @@
 			height: 100%;
 			object-fit: contain;
 		}
+		/* 特殊视频播放按钮样式 */
+		.special-video-play-button {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			z-index: 16;
+			width: clamp(60px, 8vw, 120px);
+			height: clamp(60px, 8vw, 120px);
+			cursor: pointer;
+			transition: opacity 0.3s;
+			pointer-events: auto;
+			margin: 0;
+			padding: 0;
+		}
+		.special-video-play-button:hover {
+			opacity: 0.8;
+		}
 		/* 响应式媒体查询 */
 		@media (max-width: 768px) {
 			.content-inner-wrapper {
@@ -481,18 +499,22 @@
 					// 为"探索创新方案"第3页（索引2，page=3）添加特殊视频
 					if (pageType === '探索创新方案' && index === 2) {
 						const specialVideoWrapper = $('<div class="special-video-wrapper special-video-wrapper-2-4"></div>');
-						const specialVideo = $('<video class="media-content media-content-video special-video" muted playsinline loop autoplay></video>');
+						const specialVideo = $('<video class="media-content media-content-video special-video" playsinline loop></video>');
 						specialVideo.attr('src', './data/探索创新方案/全球首款 术中双旋调强 超精放射外科解决方案.mp4');
+						const playButton = $('<img src="./img/play.svg" alt="播放" class="special-video-play-button" data-video-id="special-video-2-4" />');
 						specialVideoWrapper.append(specialVideo);
+						specialVideoWrapper.append(playButton);
 						svgContainer.append(specialVideoWrapper);
 					}
 
 					// 为"探索创新方案"第5页（索引4，page=5）添加特殊视频
 					if (pageType === '探索创新方案' && index === 4) {
 						const specialVideoWrapper = $('<div class="special-video-wrapper special-video-wrapper-2-6"></div>');
-						const specialVideo = $('<video class="media-content media-content-video special-video" muted playsinline loop autoplay></video>');
+						const specialVideo = $('<video class="media-content media-content-video special-video" playsinline loop></video>');
 						specialVideo.attr('src', './data/探索创新方案/拓展SRS边界：让多发脑转移瘤患者，从活着到活好.mp4');
+						const playButton = $('<img src="./img/play.svg" alt="播放" class="special-video-play-button" data-video-id="special-video-2-6" />');
 						specialVideoWrapper.append(specialVideo);
+						specialVideoWrapper.append(playButton);
 						svgContainer.append(specialVideoWrapper);
 					}
 
@@ -548,9 +570,11 @@
 					// 为"肺癌脑转移放射外科"第3页（索引2，page=3）添加特殊视频
 					if (pageType === '肺癌脑转移放射外科' && index === 2) {
 						const specialVideoWrapper = $('<div class="special-video-wrapper special-video-wrapper-2-20"></div>');
-						const specialVideo = $('<video class="media-content media-content-video special-video" muted playsinline loop autoplay></video>');
+						const specialVideo = $('<video class="media-content media-content-video special-video" playsinline loop></video>');
 						specialVideo.attr('src', './data/卓越临床获益/肺癌脑转移放射外科/HyperArc超弧刀放射外科同时治疗多达数十个转移瘤_每次治疗10分钟，1-5次完成.mp4');
+						const playButton = $('<img src="./img/play.svg" alt="播放" class="special-video-play-button" data-video-id="special-video-2-20" />');
 						specialVideoWrapper.append(specialVideo);
+						specialVideoWrapper.append(playButton);
 						svgContainer.append(specialVideoWrapper);
 					}
 
@@ -560,6 +584,51 @@
 				});
 				updateContentPosition();
 				handleMediaPlayback();
+				// 绑定特殊视频播放按钮事件
+				bindSpecialVideoPlayButtons();
+			}
+
+			// 绑定特殊视频播放按钮事件
+			function bindSpecialVideoPlayButtons() {
+				$('.special-video-play-button').each(function() {
+					const playButton = $(this);
+					const videoId = playButton.attr('data-video-id');
+					const videoWrapper = playButton.closest('.special-video-wrapper');
+					const video = videoWrapper.find('video.special-video')[0];
+					
+					if (video) {
+						// 点击播放按钮时播放视频
+						playButton.on('click', function(e) {
+							e.preventDefault();
+							e.stopPropagation(); // 阻止事件冒泡，避免影响翻页
+							video.play().catch(function(error) {
+								console.log('播放失败:', error);
+							});
+						});
+						
+						// 监听视频播放事件，隐藏播放按钮
+						$(video).on('play', function() {
+							playButton.css('display', 'none');
+						});
+						
+						// 视频暂停时显示播放按钮
+						$(video).on('pause', function() {
+							playButton.css('display', 'block');
+						});
+						
+						// 视频结束时显示播放按钮
+						$(video).on('ended', function() {
+							playButton.css('display', 'block');
+						});
+						
+						// 初始化时，如果视频未播放，显示播放按钮
+						if (video.paused) {
+							playButton.css('display', 'block');
+						} else {
+							playButton.css('display', 'none');
+						}
+					}
+				});
 			}
 
 			function renderPageIndicator() {
@@ -693,12 +762,27 @@
 					const isActive = index === currentPage;
 					$(this).find('.media-content-video').each(function () {
 						const video = this;
+						const videoWrapper = $(video).closest('.special-video-wrapper');
+						const playButton = videoWrapper.find('.special-video-play-button');
+						
 						if (isActive) {
-							const playMethod = video.play;
-							if (typeof playMethod === 'function') {
-								const playPromise = playMethod.call(video);
-								if (typeof playPromise === 'object' && typeof playPromise.then === 'function') {
-									playPromise.catch(function () { });
+							// 特殊视频不自动播放，保持用户控制
+							if (!videoWrapper.length || !video.hasAttribute('controls')) {
+								const playMethod = video.play;
+								if (typeof playMethod === 'function') {
+									const playPromise = playMethod.call(video);
+									if (typeof playPromise === 'object' && typeof playPromise.then === 'function') {
+										playPromise.catch(function () { });
+									}
+								}
+							} else {
+								// 特殊视频：根据播放状态更新播放按钮
+								if (playButton.length) {
+									if (video.paused) {
+										playButton.css('display', 'block');
+									} else {
+										playButton.css('display', 'none');
+									}
 								}
 							}
 						} else {
@@ -707,6 +791,10 @@
 								pauseMethod.call(video);
 							}
 							video.currentTime = 0;
+							// 非当前页面的特殊视频显示播放按钮
+							if (playButton.length) {
+								playButton.css('display', 'block');
+							}
 						}
 					});
 				});
