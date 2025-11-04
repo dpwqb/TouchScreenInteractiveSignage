@@ -312,6 +312,7 @@
 			let currentPage = 0;
 			let totalPages = 0;
 			let pageType = '';
+			let fromPage = '';
 
 			init();
 
@@ -319,6 +320,7 @@
 				const urlParams = new URLSearchParams(window.location.search);
 				const pageParam = urlParams.get('page');
 				pageType = urlParams.get('type') || ''; // 获取页面参数
+				fromPage = urlParams.get('from') || ''; // 获取来源页面参数
 				currentPage = pageParam ? parseInt(pageParam) - 1 : 0;
 				loadPageData();
 			}
@@ -350,7 +352,7 @@
 			function renderPageContent() {
 				const contentWrapper = $('#contentWrapper');
 				contentWrapper.empty();
-				pageData.forEach((page,index) => {
+				pageData.forEach((page, index) => {
 					const svgContainer = $('<div class="svg-container"></div>');
 
 					// 创建内容内部包装器
@@ -553,6 +555,9 @@
 				const url = new URL(window.location.href);
 				url.searchParams.set('page', currentPage + 1);
 				url.searchParams.set('type', pageType); // 保持页面类型参数
+				if (fromPage) {
+					url.searchParams.set('from', fromPage); // 保持来源页面参数
+				}
 				window.history.pushState({}, '', url);
 				updateContentPosition();
 				updatePageIndicator();
@@ -648,46 +653,43 @@
 						}
 					});
 				});
-      }
+			}
 
-      // 无跳跃连续循环动画
-function animateScroll(wrapper) {
-  const speed = 25; 
-  let position = 0;
-  const singleContentHeight = wrapper.find('.scrolling-text').first().outerHeight();
-  const totalContentHeight = singleContentHeight * 2;
+			// 无跳跃连续循环动画
+			function animateScroll(wrapper) {
+				const speed = 25;
+				let position = 0;
+				const singleContentHeight = wrapper.find('.scrolling-text').first().outerHeight();
+				const totalContentHeight = singleContentHeight * 2;
 
-  function scroll() {
-    position++;
-    if (position >= singleContentHeight) {
+				function scroll() {
+					position++;
+					if (position >= singleContentHeight) {
 
-      position = 0;
-      wrapper.css('transition', 'none').css('top', `-${position}px`);
-      requestAnimationFrame(() => {
-        wrapper.css('transition', 'top 0.1s linear');
-      });
-    } else {
-      // 正常滚动
-      wrapper.css('top', `-${position}px`);
-    }
-    requestAnimationFrame(scroll);
-  }
-  
-  scroll();
-}
-        });
+						position = 0;
+						wrapper.css('transition', 'none').css('top', `-${position}px`);
+						requestAnimationFrame(() => {
+							wrapper.css('transition', 'top 0.1s linear');
+						});
+					} else {
+						// 正常滚动
+						wrapper.css('top', `-${position}px`);
+					}
+					requestAnimationFrame(scroll);
+				}
 
-                // 获取返回URL的函数
-                function getReturnUrl() {
-                        const urlParams = new URLSearchParams(window.location.search);
-                        const returnPage = urlParams.get('returnPage');
-                        if (returnPage) {
-                                window.location.href = `./index.html?page=${returnPage}`;
-                        } else {
-                                window.location.href = './index.html?page=0';
-                        }
-                }
-        </script>
+				scroll();
+			}
+		});
+
+		// 返回上一页的函数
+		function getReturnUrl() {
+			const urlParams = new URLSearchParams(window.location.search);
+			const from = urlParams.get('from');
+			// 如果有来源参数，直接拼接到返回路径；否则返回首页
+			window.location.href = `./${from?from:'index'}.html`;
+		}
+	</script>
 
 </body>
 
