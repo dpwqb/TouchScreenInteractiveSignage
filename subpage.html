@@ -187,6 +187,11 @@
 		#lungVideo1, #lungVideo2 {
 			pointer-events: auto !important;
 		}
+		
+		/* 为所有特殊视频启用点击事件 */
+		.special-video {
+			pointer-events: auto !important;
+		}
 		.media-fallback {
 			width: 100%;
 			color: white;
@@ -663,6 +668,17 @@
 							});
 						});
 
+						// 点击视频本身播放/暂停
+						$(video).on('click', function () {
+							if (video.paused) {
+								video.play().catch(function (error) {
+									console.log('播放失败:', error);
+								});
+							} else {
+								video.pause();
+							}
+						});
+
 						// 监听视频播放事件，隐藏播放按钮
 						$(video).on('play', function () {
 							playButton.css('display', 'none');
@@ -990,7 +1006,8 @@
 			const urlParams = new URLSearchParams(window.location.search);
 			const from = urlParams.get('from');
 			// 如果有来源参数，直接拼接到返回路径；否则返回首页
-			window.location.href = `./${from ? from : 'index'}.html`;
+			// window.location.href = `./${from ? from : 'index'}.html`;
+			window.location.href = `./index.html`;
 		}
 	</script>
 
