@@ -234,7 +234,7 @@
         margin: 0;
       }
 		/* 特殊视频样式 - 基础样式（共用部分） */
-		.special-video-wrapper {
+		.special-video-wrapper1 {
 			position: absolute;
 			left: 50%;
 			transform: translate(-50%, -50%);
@@ -243,7 +243,7 @@
 			justify-content: center;
 			align-items: center;
 		}
-		.special-video {
+		.special-video1 {
 			width: 100%;
 			height: 100%;
 			object-fit: contain;
@@ -531,15 +531,15 @@
 
 					// 为"Ethos治疗宫颈癌"第2页（索引1，page=2）添加特殊视频
 					if (pageType === 'Ethos治疗宫颈癌' && index === 1) {
-						const specialVideoWrapper = $('<div class="special-video-wrapper special-video-wrapper-17"></div>');
-						const specialVideo = $('<video class="media-content media-content-video special-video" muted playsinline loop autoplay></video>');
+						const specialVideoWrapper = $('<div class="special-video-wrapper1 special-video-wrapper-17"></div>');
+						const specialVideo = $('<video class="media-content media-content-video special-video1" muted playsinline loop autoplay></video>');
 						specialVideo.attr('src', './data/典型病例库/4.2/20251030-互动屏-Ethos-内容_17.mp4');
 						specialVideoWrapper.append(specialVideo);
 						svgContainer.append(specialVideoWrapper);
 					}
 
 					// 为"超清影像"第2页（索引1，page=2）添加4个视频展示
-					if (pageType === '超清影像' && index === 1) {
+					if (pageType === '超清影像' && index === 0) {
 						// 第一排第一个视频（头颈HyperSight）
 						const videoWrapper1 = $('<div class="special-video-wrapper special-video-wrapper-ethos-1"></div>');
 						const video1 = $('<video id="ethosVideo1" class="media-content media-content-video special-video" muted playsinline loop autoplay></video>');
@@ -570,7 +570,7 @@
 					}
 
 					// 为"超清影像"第3页（索引1，page=3）添加4个视频展示
-					if (pageType === '超清影像' && index === 2) {
+					if (pageType === '超清影像' && index === 1) {
 						// 第一排第一个视频
 						const videoWrapper1 = $('<div class="special-video-wrapper special-video-wrapper-ethos-1"></div>');
 						const video1 = $('<video id="ethosVideo1" class="media-content media-content-video special-video" muted playsinline loop autoplay></video>');
