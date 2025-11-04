@@ -123,120 +123,118 @@
 			overflow: hidden; /* 防止内容溢出 */
 			position: relative; /* 为内部绝对定位提供参考 */
 		}
-	.content-inner-wrapper {
-		width: 100%;
-		height: 100%;
-		/* padding: 20px; */
-		box-sizing: border-box;
-		display: flex;
-		flex-direction: column;
-		justify-content: flex-start;
-		align-items: center;
-	}
-	.page-title {
-		font-family: 'SHBreeHeadlineGlobal', sans-serif;
-		font-size: clamp(2rem, 4vw, 5rem); /* 响应式字体大小 */
-		font-weight: bold;
-		color: #EC6600;
-		padding: 50px 32px 0 32px;
-		width: 100%;
-		max-width: 100%;
-		/* text-align: center; */
-		word-wrap: break-word; /* 长文本自动换行 */
-		overflow-wrap: break-word;
-		margin-bottom: 10px;
-		box-sizing: border-box;
+		.content-inner-wrapper {
+			width: 100%;
+			height: 100%;
+			/* padding: 20px; */
+			box-sizing: border-box;
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-start;
+			align-items: center;
+		}
+		.page-title {
+			font-family: 'SHBreeHeadlineGlobal', sans-serif;
+			font-size: clamp(2rem, 4vw, 5rem); /* 响应式字体大小 */
+			font-weight: bold;
+			color: #EC6600;
+			padding: 50px 32px 0 32px;
+			width: 100%;
+			max-width: 100%;
+			/* text-align: center; */
+			word-wrap: break-word; /* 长文本自动换行 */
+			overflow-wrap: break-word;
+			margin-bottom: 10px;
+			box-sizing: border-box;
 		}
 		.page-subtitle {
-		  font-size: clamp(1.2rem, 2.5vw, 3rem); /* 响应式字体大小 */
-		  color: white;
-		  width: 100%;
-		  max-width: 100%;
+			font-size: clamp(1.2rem, 2.5vw, 3rem); /* 响应式字体大小 */
+			color: white;
+			width: 100%;
+			max-width: 100%;
 			padding: 0 32px;
-		  word-wrap: break-word; /* 长文本自动换行 */
-		  overflow-wrap: break-word;
-		  margin-bottom: 50px;
-		  box-sizing: border-box;
+			word-wrap: break-word; /* 长文本自动换行 */
+			overflow-wrap: break-word;
+			margin-bottom: 50px;
+			box-sizing: border-box;
 		}
 		.media-wrapper,
 		.svg-wrapper {
-		  width: 100%;
+			width: 100%;
 			/* margin: 10px; */
-		  flex: 1 1 auto;
-		  display: flex;
-		  justify-content: center;
-		  align-items: center;
-		  box-sizing: border-box;
-		  overflow: hidden;
+			flex: 1 1 auto;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			box-sizing: border-box;
+			overflow: hidden;
 		}
 		.media-content,
 		.svg-content {
-		  width: 100%;
-		  height: auto;
-		  max-width: 100%;
-		  max-height: 100%;
-		  object-fit: contain;
-		  pointer-events: none;
-		  box-sizing: border-box;
+			width: 100%;
+			height: auto;
+			max-width: 100%;
+			max-height: 100%;
+			object-fit: contain;
+			pointer-events: none;
+			box-sizing: border-box;
 		}
 		.media-content.media-content-video {
-		  height: 100%;
+			height: 100%;
 		}
 		.media-fallback {
-		  width: 100%;
-		  color: white;
-		  font-size: clamp(1rem, 2vw, 2.5rem);
-		  text-align: center;
+			width: 100%;
+			color: white;
+			font-size: clamp(1rem, 2vw, 2.5rem);
+			text-align: center;
 		}
 		.page-indicator {
-		  position: absolute;
-		  bottom: 20px;
-		  left: 50%;
-		  transform: translateX(-50%);
-		  display: flex;
-		  gap: 10px;
-		  z-index: 10;
+			position: absolute;
+			bottom: 20px;
+			left: 50%;
+			transform: translateX(-50%);
+			display: flex;
+			gap: 10px;
+			z-index: 10;
 		}
 		.indicator-dot {
-		  width: 10px;
-		  height: 10px;
-		  border-radius: 50%;
-		  background-color: rgba(255, 255, 255, 0.5);
-		  transition: background-color 0.3s;
+			width: 10px;
+			height: 10px;
+			border-radius: 50%;
+			background-color: rgba(255, 255, 255, 0.5);
+			transition: background-color 0.3s;
 		}
 		.indicator-dot.active {
-		  background-color: white;
+			background-color: white;
 		}
-		
 		/* 响应式媒体查询 */
 		@media (max-width: 768px) {
-		  .content-inner-wrapper {
-		    padding: 15px;
-		  }
-		  .page-title {
-		    font-size: clamp(1.5rem, 3vw, 3rem);
-		  }
-		  .page-subtitle {
-		    font-size: clamp(1rem, 2vw, 2rem);
-		  }
+			.content-inner-wrapper {
+				padding: 15px;
+			}
+			.page-title {
+				font-size: clamp(1.5rem, 3vw, 3rem);
+			}
+			.page-subtitle {
+				font-size: clamp(1rem, 2vw, 2rem);
+			}
 		}
-		
 		@media (max-width: 480px) {
-		  .content-container {
-		    padding: 10px;
-		  }
-		  .svg-container {
-		    padding: 10px;
-		  }
-		  .content-inner-wrapper {
-		    padding: 10px;
-		  }
-		  .page-title {
-		    font-size: clamp(1.2rem, 2.5vw, 2.5rem);
-		  }
-		  .page-subtitle {
-		    font-size: clamp(0.9rem, 1.8vw, 1.8rem);
-		  }
+			.content-container {
+				padding: 10px;
+			}
+			.svg-container {
+				padding: 10px;
+			}
+			.content-inner-wrapper {
+				padding: 10px;
+			}
+			.page-title {
+				font-size: clamp(1.2rem, 2.5vw, 2.5rem);
+			}
+			.page-subtitle {
+				font-size: clamp(0.9rem, 1.8vw, 1.8rem);
+			}
 		}
 	}
 	</style>
