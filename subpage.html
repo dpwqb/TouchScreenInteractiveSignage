@@ -323,6 +323,7 @@
 			let currentPage = 0;
 			let totalPages = 0;
 			let pageType = '';
+			let fromPage = '';
 
 			init();
 
@@ -330,6 +331,7 @@
 				const urlParams = new URLSearchParams(window.location.search);
 				const pageParam = urlParams.get('page');
 				pageType = urlParams.get('type') || ''; // 获取页面参数
+				fromPage = urlParams.get('from') || ''; // 获取来源页面参数
 				currentPage = pageParam ? parseInt(pageParam) - 1 : 0;
 				loadPageData();
 			}
@@ -484,6 +486,9 @@
 				const url = new URL(window.location.href);
 				url.searchParams.set('page', currentPage + 1);
 				url.searchParams.set('type', pageType); // 保持页面类型参数
+				if (fromPage) {
+					url.searchParams.set('from', fromPage); // 保持来源页面参数
+				}
 				window.history.pushState({}, '', url);
 				updateContentPosition();
 				updatePageIndicator();
@@ -579,14 +584,16 @@
 			}
 		});
 
-		// 获取返回URL的函数
+		// 返回上一页的函数
 		function getReturnUrl() {
 			const urlParams = new URLSearchParams(window.location.search);
-			const returnPage = urlParams.get('returnPage');
-			if (returnPage) {
-				window.location.href = `./index.html?page=${returnPage}`;
+			const from = urlParams.get('from');
+			
+			// 如果有来源参数，直接拼接到返回路径；否则返回首页
+			if (from) {
+				window.location.href = `./${from}.html`;
 			} else {
-				window.location.href = './index.html?page=0';
+				window.location.href = './index.html';
 			}
 		}
 	</script>
