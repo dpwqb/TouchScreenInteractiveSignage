@@ -237,6 +237,16 @@
 			top: 38%;
 			width: 80svw;
 		}
+		/* 特殊图片样式 - 肺癌脑转移放射外科第1页（不同部分） */
+		.special-image-wrapper-2-18 {
+			top: 33%;
+			width: 50svw;
+		}
+		.special-image {
+			width: 100%;
+			height: 100%;
+			object-fit: contain;
+		}
 		/* 响应式媒体查询 */
 		@media (max-width: 768px) {
 			.content-inner-wrapper {
@@ -393,6 +403,15 @@
 						specialVideo.attr('src', './data/探索创新方案/拓展SRS边界：让多发脑转移瘤患者，从活着到活好.mp4');
 						specialVideoWrapper.append(specialVideo);
 						svgContainer.append(specialVideoWrapper);
+					}
+
+					// 为"肺癌脑转移放射外科"第1页（索引0，page=1）添加特殊GIF
+					if (pageType === '肺癌脑转移放射外科' && index === 0) {
+						const specialImageWrapper = $('<div class="special-video-wrapper special-image-wrapper-2-18"></div>');
+						const specialImage = $('<img class="special-image" alt="" draggable="false" />');
+						specialImage.attr('src', './data/卓越临床获益/肺癌脑转移放射外科/展板GIF-大.gif');
+						specialImageWrapper.append(specialImage);
+						svgContainer.append(specialImageWrapper);
 					}
 
 					// 为"肺癌脑转移放射外科"第3页（索引2，page=3）添加特殊视频
